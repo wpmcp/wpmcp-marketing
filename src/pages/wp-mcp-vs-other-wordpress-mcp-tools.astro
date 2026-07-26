@@ -1,0 +1,183 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../consts';
+
+const field = [
+  {
+    name: 'WP MCP',
+    kind: 'This project, the wpmcp plugin',
+    d: 'A WordPress plugin using the official WordPress Abilities API. Every mutating tool routes through one safety engine that snapshots the target before it changes, so a single operation or a whole agent session can be restored with one click. Free and GPL-2.0.',
+  },
+  {
+    name: "Automattic's WordPress MCP connector",
+    kind: 'Official adapter / connector approach',
+    d: 'An official, well-maintained way to expose WordPress content and actions to an MCP client, built on the same underlying WordPress Abilities API foundation WP MCP uses. It focuses on exposing the surface; it does not ship a snapshot-and-restore safety layer of its own around every write.',
+  },
+  {
+    name: 'Royal MCP',
+    kind: 'Independent MCP server',
+    d: 'An independent open-source WordPress MCP implementation. Useful as a reference for tool coverage, but it does not build a dedicated before-image snapshot and one-click rollback engine into its write path.',
+  },
+  {
+    name: 'Respira',
+    kind: 'Local Node proxy',
+    d: "Runs as a separate local Node process that proxies MCP calls to WordPress, rather than living inside WordPress as a plugin. That extra moving part is its own source of risk: Respira's own changelog has documented a bug that applied changes to the wrong connected site.",
+  },
+];
+
+const rows = [
+  ['Runs as', 'Single WordPress plugin', 'WordPress-side connector', 'MCP server', 'Separate local Node process'],
+  ['Snapshot before every write', 'Yes, enforced in code', 'Not built in', 'Not built in', 'Not built in'],
+  ['One-click restore, single change', 'Yes, rollback-operation', 'No equivalent', 'No equivalent', 'No equivalent'],
+  ['One-click restore, whole agent session', 'Yes, rollback-session', 'No equivalent', 'No equivalent', 'No equivalent'],
+  ['Operation history / audit trail', 'Yes, last 20 free, unlimited on Pro', 'Standard WP revisions only', 'Varies by deployment', 'Varies by deployment'],
+  ['Content and page edits undoable', 'Yes', 'WP post revisions', 'Depends on host setup', 'Depends on host setup'],
+  ['Media edits undoable', 'Yes (metadata; see note)', 'Not built in', 'Not built in', 'Not built in'],
+  ['User profile edits undoable', 'Yes', 'Not built in', 'Not built in', 'Not built in'],
+  ['WooCommerce product edits undoable', 'Yes, exact price and stock restore', 'No native WooCommerce layer', 'Not built in', 'Not built in'],
+  ['WooCommerce order status changes undoable', 'Yes, HPOS- and CPT-safe', 'No native WooCommerce layer', 'Not built in', 'Not built in'],
+  ['Navigation menu edits undoable', 'Yes', 'Not built in', 'Not built in', 'Not built in'],
+  ['SEO metadata edits undoable', 'Yes, Yoast SEO and Rank Math', 'Not built in', 'Not built in', 'Not built in'],
+  ['Elementor page building', 'Yes — deep editing on Pro: 44-widget catalog, structural suite', 'Not built in', 'Not built in', 'Not built in'],
+  ['Runs inside WordPress, no extra process', 'Yes', 'Yes', 'Depends on hosting choice', 'No, local Node proxy required'],
+  ['License', 'GPL-2.0-or-later, free', 'GPL-2.0-or-later, free', 'Open source, check project', 'MIT wrapper, check project'],
+];
+---
+
+<Base
+  title="WP MCP vs other WordPress MCP tools: the undo and audit comparison"
+  description="How WP MCP compares with Automattic's connector, Royal MCP, and Respira on the question that matters: what happens the moment the AI gets something wrong."
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="sec-label">Comparison</p>
+      <h1>WP MCP vs the other WordPress MCP tools.</h1>
+      <p class="lede">
+        A handful of tools now let an AI agent connect to WordPress or
+        WooCommerce over the Model Context Protocol and make changes
+        directly. The question worth asking before you install any of them
+        is not "what can it do" — it is "what happens the moment it gets
+        something wrong". This page compares WP MCP against the field on
+        exactly that question, as plainly as we can put it.
+      </p>
+      <p class="hero-fine mono">Last reviewed July 2026 · judge us on the same page</p>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">The field, briefly</p>
+      <h2 class="rv">Four ways to wire an agent into WordPress.</h2>
+      <div class="field-grid">
+        {field.map((f) => (
+          <div class="card rv">
+            <p class="f-kind mono">{f.kind}</p>
+            <h3>{f.name}</h3>
+            <p>{f.d}</p>
+          </div>
+        ))}
+      </div>
+      <p class="disclosure rv">
+        We are not neutral here, obviously — this is our own comparison
+        page. Where we are not certain of a competitor's current internals
+        we say so rather than guess, and we welcome corrections:
+        email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> if
+        something here is out of date.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">The undo and audit moat</p>
+      <h2 class="rv">Snapshot, restore, audit. Nobody else pairs them.</h2>
+      <p class="lede-dim rv">
+        A snapshot taken automatically before every write, a one-click
+        restore for a single change or an entire agent session, and a
+        visible history of what an agent did and when. Not a marketing
+        claim, a mechanism: in WP MCP, no tool that writes to the database
+        can skip it, because every mutation is required to route through one
+        orchestrator (<code>Safe_Mutation::run()</code>) that snapshots
+        first, applies second, and can reverse the change on demand.
+      </p>
+      <div class="table-scroll rv">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>WP MCP</th>
+              <th>Automattic connector</th>
+              <th>Royal MCP</th>
+              <th>Respira</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td class="cap">{r[0]}</td>
+                <td class="us">{r[1]}</td>
+                <td>{r[2]}</td>
+                <td>{r[3]}</td>
+                <td>{r[4]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="note rv">
+        "Not built in" means the tool has no dedicated snapshot-and-restore
+        mechanism for that domain, not that the tool is bad at what it does.
+        Media restores cover metadata; disk bytes are handled by the
+        separate file-backup path.
+      </p>
+    </div>
+  </section>
+
+  <section class="closer">
+    <div class="wrap rv" style="text-align:center">
+      <h2>Same MCP surface.<br />Plus the way back.</h2>
+      <div class="hero-ctas" style="justify-content:center">
+        <a class="btn btn-primary" href="https://github.com/wpmcp/wpmcp/releases/latest" rel="noopener">Get the free plugin</a>
+        <a class="btn" href="/docs.html">Read how the safety engine works</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-hero { padding: 90px 0 40px; }
+  .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px 0 18px; }
+  .lede-dim { color: inherit; opacity: 0.75; font-size: 1.08rem; margin: 16px 0 26px; }
+  .hero-fine { font-size: 0.78rem; color: var(--ink-faint); }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .f-kind {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 10px;
+  }
+  .field-grid h3 { margin-bottom: 8px; }
+  .field-grid .card p:last-child { font-size: 0.95rem; color: var(--paper-dim); }
+  .disclosure { margin-top: 28px; font-size: 0.92rem; color: var(--paper-dim); }
+
+  .table-scroll { overflow-x: auto; margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-panel); }
+  table { min-width: 900px; }
+  td { font-size: 0.92rem; color: var(--ink-dim); }
+  td.cap { color: var(--ink); font-weight: 500; }
+  td.us { color: var(--good); }
+  .note { margin-top: 18px; font-size: 0.88rem; color: var(--ink-faint); }
+
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .closer { padding: 110px 0; }
+
+  @media (max-width: 880px) {
+    .field-grid { grid-template-columns: 1fr; }
+  }
+</style>

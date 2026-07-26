@@ -1,0 +1,266 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '../styles/global.css';
+import { GITHUB_URL, INSTALL_FREE_URL, ISSUES_URL, EMCP_URL } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set on the homepage only; emits SoftwareApplication schema. */
+  schemaHome?: boolean;
+}
+
+const { title, description, schemaHome = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og-image.png', Astro.site);
+
+const nav = [
+  { href: '/#how', label: 'How it works' },
+  { href: '/#features', label: 'Features' },
+  { href: '/#pricing', label: 'Pricing' },
+  { href: '/docs.html', label: 'Docs' },
+  { href: '/wp-mcp-vs-other-wordpress-mcp-tools.html', label: 'Compare' },
+  { href: '/about.html', label: 'About' },
+];
+const current = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="WP MCP" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" content="#0a0e14" />
+    <script>document.documentElement.classList.add('js');</script>
+    {
+      schemaHome && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'WP MCP (wpmcp)',
+            operatingSystem: 'WordPress',
+            applicationCategory: 'DeveloperApplication',
+            description:
+              'An MCP server that runs inside WordPress on the official Abilities API. AI agents like Claude and Cursor build and run the site, with a snapshot before every write and one-click rollback.',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+            },
+            url: 'https://wpmcp-pro.com/',
+          })}
+        />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header>
+      <div class="wrap bar">
+        <a class="logo" href="/">
+          <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+            <rect x="1" y="1" width="24" height="24" rx="4" fill="none" stroke="var(--accent)" stroke-width="2" />
+            <path d="M17.5 9.2a5.4 5.4 0 1 1-8.9 1.6" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" />
+            <path d="M8 6.6v4.4h4.4" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>WP<em>MCP</em></span>
+        </a>
+        <nav aria-label="Main">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={!item.href.startsWith('/#') && current === item.href ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a class="btn btn-primary cta" href={INSTALL_FREE_URL} rel="noopener">Get the plugin</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <div class="logo foot-logo">WP<em>MCP</em></div>
+          <p>
+            The AI agent that builds your WordPress site, and physically
+            can't wreck it. Snapshot before every write, one-click rollback.
+          </p>
+        </div>
+        <div class="foot-cols">
+          <div>
+            <h4>Product</h4>
+            <a href="/#how">How it works</a>
+            <a href="/#features">Features</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="/wp-mcp-vs-other-wordpress-mcp-tools.html">Compare tools</a>
+          </div>
+          <div>
+            <h4>Solutions</h4>
+            <a href="/docs.html">Documentation</a>
+            <a href="/mcp-for-woocommerce.html">MCP for WooCommerce</a>
+            <a href="/mcp-for-seo.html">MCP for SEO</a>
+          </div>
+          <div>
+            <h4>Project</h4>
+            <a href={GITHUB_URL} rel="noopener">GitHub</a>
+            <a href={ISSUES_URL} rel="noopener">Report an issue</a>
+            <a href={EMCP_URL} rel="noopener">EMCP for Elementor</a>
+            <a href="/about.html">About</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms.html">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="wrap colophon">
+        <span>© 2026 WP MCP · GPL-2.0-or-later, self-hosted</span>
+        <span class="mono">wordpress 6.8+ · abilities api · mcp</span>
+      </div>
+    </footer>
+
+    <script>
+      const seen = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              seen.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -8%', threshold: 0.05 }
+      );
+      document.querySelectorAll('.rv').forEach((el) => seen.observe(el));
+    </script>
+
+    <style>
+      .skip {
+        position: absolute;
+        left: -999px;
+        top: 8px;
+        background: var(--accent-deep);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 4px;
+        z-index: 10;
+      }
+      .skip:focus { left: 8px; }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        backdrop-filter: blur(10px);
+        background: rgba(10, 14, 20, 0.82);
+        border-bottom: 1px solid var(--line);
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        height: 64px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .logo:hover { text-decoration: none; }
+      .logo em { color: var(--accent); font-style: normal; }
+      nav {
+        display: flex;
+        gap: 22px;
+        margin-left: auto;
+      }
+      nav a {
+        color: var(--ink-dim);
+        font-size: 0.95rem;
+      }
+      nav a:hover { color: var(--ink); text-decoration: none; }
+      nav a[aria-current='page'] { color: var(--accent); }
+      .cta { padding: 9px 18px; font-size: 0.82rem; }
+
+      footer {
+        border-top: 1px solid var(--line);
+        margin-top: 40px;
+        background: var(--bg-raise);
+        position: relative;
+        z-index: 1;
+      }
+      .foot {
+        display: grid;
+        grid-template-columns: 1.2fr 2fr;
+        gap: 48px;
+        padding: 56px 24px 40px;
+      }
+      .foot-logo { font-size: 1.3rem; margin-bottom: 12px; }
+      .foot p { color: var(--ink-dim); font-size: 0.95rem; }
+      .foot-cols {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .foot-cols h4 {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+      }
+      .foot-cols a {
+        display: block;
+        color: var(--ink-dim);
+        font-size: 0.95rem;
+        margin-bottom: 9px;
+      }
+      .foot-cols a:hover { color: var(--ink); }
+      .colophon {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 24px 26px;
+        border-top: 1px solid var(--line);
+        color: var(--ink-faint);
+        font-size: 0.82rem;
+      }
+      .colophon .mono { font-family: var(--font-mono); font-size: 0.75rem; }
+
+      @media (max-width: 820px) {
+        nav { display: none; }
+        .foot { grid-template-columns: 1fr; gap: 32px; }
+        .colophon { flex-direction: column; }
+      }
+    </style>
+  </body>
+</html>

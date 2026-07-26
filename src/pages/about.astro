@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/Base.astro';
+import { GITHUB_URL } from '../consts';
+---
+
+<Base
+  title="About WP MCP: an undoable AI agent for WordPress"
+  description="What WP MCP is, why recoverability is the headline feature, who it is for, and who builds it."
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="sec-label">About</p>
+      <h1>An undo button for the age of AI site-building.</h1>
+      <p class="lede">
+        WP MCP lets an AI agent build and run a WordPress site, and quietly
+        saves a copy of everything before it touches it. If the agent ever
+        gets something wrong, one click puts the site back exactly as it
+        was. This page explains what it is, why it works this way, and who
+        is behind it.
+      </p>
+      <p class="hero-fine mono">Free and open · GPL-2.0-or-later · built on the WordPress Abilities API</p>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">What WP MCP is</p>
+      <h2 class="rv">A plugin that makes your site safely operable by an agent.</h2>
+      <div class="prose-two rv">
+        <p>
+          WP MCP is a WordPress plugin, built on the official
+          <strong>WordPress Abilities API</strong>. Once installed, it turns
+          a site into something an AI agent can safely operate: the agent
+          can create and edit pages and products, adjust settings, manage
+          media, moderate comments, update WooCommerce orders, and more. It
+          speaks the <strong>Model Context Protocol (MCP)</strong>, so it
+          works with Claude, Cursor, and any other compatible AI client
+          through a standard connection secured by a WordPress application
+          password.
+        </p>
+        <p>
+          The part that makes WP MCP different is not what the agent can do.
+          It is what happens the instant before it does it. Every change
+          that touches the database is routed through one safety engine that
+          saves a snapshot of the affected object first. That snapshot is
+          what a one-click restore reads from, whether you undo a single
+          change or roll back a whole agent session.
+        </p>
+      </div>
+      <div class="card promise rv">
+        <p class="ag-head mono">The core promise</p>
+        <p>
+          WP MCP assumes the agent will get something wrong eventually, and
+          makes sure that when it does, the fix is a button, not a backup
+          restore and a stressful afternoon.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Why it works this way</p>
+      <h2 class="rv">Trust is not a safety net.</h2>
+      <p class="lede-dim rv">
+        Most AI-for-WordPress tools focus on the building experience and ask
+        you to trust the model. AI is good, not perfect, and one bad change
+        on a live site is a broken client homepage or a lost sale. WP MCP
+        treats recoverability as the headline feature, not an afterthought,
+        and builds it into the write path itself.
+      </p>
+      <div class="why-grid">
+        <div class="card rv">
+          <h3>Enforced in code, not by convention</h3>
+          <p>No tool that writes to the database can bypass the safety wrapper. It is a structural guarantee, not a guideline the code happens to follow.</p>
+        </div>
+        <div class="card rv">
+          <h3>Works at the data layer</h3>
+          <p>Snapshots capture the real post row, meta, terms, and comments, so a restore works the same no matter which page builder or theme created the page.</p>
+        </div>
+        <div class="card rv">
+          <h3>Runs inside your WordPress</h3>
+          <p>One plugin, no separate service and no third party holding a copy of your site. Your data stays self-hosted, on your server.</p>
+        </div>
+        <div class="card rv">
+          <h3>Free where it matters</h3>
+          <p>The save, restore, and audit engine is GPL-2.0 and free forever. The safety net is never the upsell.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Scope, stated plainly</p>
+      <h2 class="rv">What it covers today.</h2>
+      <div class="prose-two rv">
+        <p>
+          WP MCP is the open-source plugin <code>wpmcp</code> and registers
+          <strong>188 abilities</strong> (163 free, 25 Pro) across the whole
+          site: content and pages, media and stock imports, site settings,
+          users and comments, WooCommerce products, orders and sales
+          reports, navigation menus, plugins and themes, SEO metadata
+          through Yoast SEO and Rank Math, deep Elementor editing on Pro, a
+          read-mostly database and filesystem surface, and read-only
+          performance and security scanners.
+        </p>
+        <p>
+          Content, product, order-status, comment, menu, and settings
+          changes are snapshotted and one-click undoable. A few deliberately
+          risky paths — raw database writes, guarded code execution, and
+          package or file deletions — are off by default and honestly report
+          that they are not covered by the undo guarantee, rather than
+          pretending everything is reversible. Where the documentation
+          describes a planned feature, it says so. We would rather
+          under-promise here than surprise you on a production site.
+        </p>
+      </div>
+      <p class="rv" style="margin-top: 20px">
+        Who it is for: developers and agencies letting an agent maintain
+        sites, including client sites; MCP client users connecting Claude
+        Code, Claude Desktop, or Cursor to a WordPress install; WooCommerce
+        store owners who want AI help without gambling the live store; and
+        anyone nervous about giving an AI write access to production who
+        wants an undo button that actually works.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Who builds it</p>
+      <h2 class="rv">Built by a WordPress plugin developer, in the open.</h2>
+      <div class="prose-two rv">
+        <p>
+          WP MCP is built by <strong>Fahad Murtaza</strong>, a WordPress
+          plugin developer who has spent years shipping tools for the
+          WordPress and WooCommerce ecosystem. The project grew out of a
+          simple observation: AI agents are getting write access to
+          production sites, and nobody was shipping the undo button.
+        </p>
+        <p>
+          Development happens in the open on
+          <a href={GITHUB_URL} rel="noopener">GitHub</a>, with honest
+          release notes — including which paths are verified in CI and which
+          are production-only.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-hero { padding: 90px 0 40px; }
+  .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px 0 18px; }
+  .lede-dim { color: inherit; opacity: 0.75; font-size: 1.08rem; margin: 16px 0 26px; }
+  .hero-fine { font-size: 0.78rem; color: var(--ink-faint); }
+
+  .prose-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .paper .prose-two p { color: var(--paper-dim); }
+  .prose-two p { color: var(--ink-dim); max-width: none; }
+
+  .promise { margin-top: 32px; }
+  .promise .ag-head {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 8px;
+  }
+  .promise p:last-child { font-size: 1.08rem; color: var(--paper-ink); max-width: none; }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .why-grid h3 { margin-bottom: 8px; }
+  .why-grid p { font-size: 0.95rem; color: var(--ink-dim); }
+
+  @media (max-width: 880px) {
+    .prose-two, .why-grid { grid-template-columns: 1fr; }
+  }
+</style>

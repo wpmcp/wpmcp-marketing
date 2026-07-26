@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found: WP MCP"
+  description="That page does not exist. Unlike your site's content, we cannot restore it from a snapshot."
+>
+  <section class="nf">
+    <div class="wrap" style="text-align:center">
+      <p class="sec-label" style="justify-content:center">404</p>
+      <h1>No snapshot found for this page.</h1>
+      <p class="lede">
+        The page you are looking for does not exist — and this is the one
+        kind of missing content we cannot restore with one click.
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/">Back to the homepage</a>
+        <a class="btn" href="/docs.html">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding: 140px 0 160px; }
+  .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px auto 30px; max-width: 46ch; }
+  .ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .sec-label::after { display: none; }
+</style>

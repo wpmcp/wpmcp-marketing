@@ -1,0 +1,372 @@
+---
+import Base from '../layouts/Base.astro';
+import { INSTALL_FREE_URL, GITHUB_URL } from '../consts';
+
+const clients = ['Claude Code', 'Claude Desktop', 'Cursor', 'Windsurf', 'VS Code', 'Any MCP client'];
+
+const abilityGroups = [
+  { n: '01', tag: 'undo', label: 'Safety & history', d: 'Undo is the architecture. Every mutating tool routes through one snapshot-first engine; no write path can bypass it. Restore a single change or an entire agent session.', chips: ['rollback-operation', 'rollback-session', 'list-operations'] },
+  { n: '02', tag: 'safe change', label: 'Content & pages', d: 'Create, edit, organize, and delete posts and pages, snapshotted before every change and checked automatically after it.', chips: ['create-post', 'update-post', 'list-post-types'] },
+  { n: '03', tag: 'safe change', label: 'WooCommerce', d: 'Create products, update price and stock, change order status, add notes, and pull sales reports. Every store write as undoable as a page edit.', chips: ['create-product', 'update-order-status', 'get-sales-report'] },
+  { n: '04', tag: 'safe change', label: 'Page builders', d: 'Deep Elementor editing from a curated 44-widget catalog, plus Bricks and Divi support. The agent edits real builder structure, not screenshots.', chips: ['add-widget', 'update-widget', 'build-page'] },
+  { n: '05', tag: 'safe change', label: 'Media', d: 'Read and update image and file details, or pull an image from a URL or stock search straight into the library. Disk-level deletes are off by default.', chips: ['get-media', 'update-media', 'import-stock-image'] },
+  { n: '06', tag: 'safe change', label: 'Menus & structure', d: 'Build menus, add and move items, and assign menus to theme locations, all reversible like everything else.', chips: ['create-menu', 'add-menu-item', 'assign-menu-to-location'] },
+  { n: '07', tag: 'safe change', label: 'Users & comments', d: 'List and update user profiles, approve and moderate comments. Passwords and admin accounts are never touched.', chips: ['update-user', 'moderate-comment', 'list-comments'] },
+  { n: '08', tag: 'guard-railed', label: 'Plugins, themes, DB & files', d: 'Install and update plugins and themes. Database and filesystem access is read-mostly; raw writes are off by default, admin-only, and honestly flagged when outside the undo guarantee.', chips: ['install-plugin', 'query', 'read-file'] },
+  { n: '09', tag: 'read', label: 'Scanners & SEO', d: 'Scored performance and security reports, plus Yoast SEO and Rank Math metadata editing with one-click session rollback.', chips: ['scan-security', 'analyze-performance', 'update-seo-meta'] },
+];
+
+const picks = [
+  { h: 'Nothing is ever truly gone', d: 'Every change the AI makes is snapshotted before it happens. Built into the core of how WP MCP works, not something you remember to turn on.' },
+  { h: 'Works with your page builder', d: 'WP MCP saves your actual site data, so restoring a page works the same no matter which builder or theme created it.' },
+  { h: 'Lives inside your WordPress', d: 'A single plugin on the official WordPress Abilities API. No separate service, no Node proxy, no third party holding a copy of your site.' },
+  { h: 'Undo a whole afternoon', d: 'Roll back a single change, or unwind everything the AI did in a session, back to exactly how your site looked before it started.' },
+  { h: 'Catches problems before visitors do', d: 'A quick check runs after every change. If something looks broken, it gets reversed automatically before it reaches a visitor.' },
+  { h: 'Watches for trouble, not just mistakes', d: 'A built-in security scanner checks for malware, tampered core files, weak configuration, and outdated software.' },
+];
+---
+
+<Base
+  title="WP MCP: the AI agent that builds your WordPress site and can't wreck it"
+  description="An MCP server inside WordPress on the official Abilities API. AI agents build and run your site with a snapshot before every write and one-click rollback. Free and GPL."
+  schemaHome
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="sec-label">Snapshot before every write</p>
+        <h1>Let AI build your WordPress site. It <span class="mark">can't wreck it</span>.</h1>
+        <p class="lede">
+          WP MCP is an MCP server that runs inside WordPress, built on the
+          official Abilities API. It gives agents like Claude and Cursor the
+          keys to your site — pages, products, settings — while quietly
+          snapshotting everything before each write. If an agent ever gets
+          something wrong, one click puts your site back exactly as it was.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+          <a class="btn" href="#how">See how the undo works</a>
+        </div>
+        <p class="hero-fine mono">GPL-2.0 core · self-hosted · works with WordPress &amp; WooCommerce</p>
+      </div>
+
+      <div class="terminal rv" role="img" aria-label="An AI agent editing a WordPress site through WP MCP, with a snapshot saved before every write">
+        <div class="t-bar"><i></i><i></i><i></i><span>claude — connected to your-site.com</span></div>
+        <div class="t-body">
+          <p class="t-user">› Rewrite the homepage banner and add the Spring Tote Bag product</p>
+          <p class="t-tool"><b>⛨ snapshot</b> <span>homepage saved · way back guaranteed</span></p>
+          <p class="t-tool"><b>⚒ update-post</b> <span>banner rewritten</span></p>
+          <p class="t-tool"><b>⛨ snapshot</b> <span>catalog saved</span></p>
+          <p class="t-tool"><b>⚒ create-product</b> <span>"Spring Tote Bag" · $49.00</span></p>
+          <p class="t-done">✓ Done. Every change now has a Restore button in wp-admin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="clients">
+    <div class="wrap">
+      <p class="c-label mono rv">Works with any MCP-compatible client</p>
+      <div class="c-row rv">
+        {clients.map((c) => <span class="chip"><b>{c}</b></span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="wrap">
+      <p class="sec-label rv">The problem</p>
+      <h2 class="rv">AI is confident, not careful.</h2>
+      <div class="steps">
+        <div class="step rv">
+          <span class="s-n mono">01</span>
+          <h3>One speed, every change</h3>
+          <p>An AI agent editing a live site does not pause before a risky change. It moves with the same confidence whether it is fixing a typo or wiping out your homepage.</p>
+        </div>
+        <div class="step rv">
+          <span class="s-n mono">02</span>
+          <h3>Every other tool asks you to just trust it</h3>
+          <p>Trust is not a safety net. AI is good, not perfect, and one bad change on a live site is a broken homepage, an angry client, and an afternoon you cannot get back.</p>
+        </div>
+        <div class="step rv">
+          <span class="s-n mono">03</span>
+          <h3>Last night's backup will not save you</h3>
+          <p>A nightly backup does not help when the AI broke something ninety seconds ago. You need protection at the moment of the change, not the moment of the night.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper" id="how">
+    <div class="wrap">
+      <p class="sec-label rv">How it works</p>
+      <h2 class="rv">Nothing reaches your site without a snapshot saved first.</h2>
+      <p class="lede-dim rv">
+        Every change the AI makes — a new page, an edited product, a settings
+        update — follows the same four steps before it counts as done. You
+        never have to trust that it went well. You can check, and undo it if
+        it did not.
+      </p>
+      <div class="steps four">
+        <div class="step rv">
+          <span class="s-n mono">01</span>
+          <h3>Save a snapshot</h3>
+          <p>Before anything changes, WP MCP quietly saves exactly how that page, product, or setting looked, so there is always a way back.</p>
+        </div>
+        <div class="step rv">
+          <span class="s-n mono">02</span>
+          <h3>Make the change</h3>
+          <p>The AI does what you asked: update copy, add a product, adjust a setting. One clean change, nothing left half-done.</p>
+        </div>
+        <div class="step rv">
+          <span class="s-n mono">03</span>
+          <h3>Check the result</h3>
+          <p>A quick check confirms the page still works. If something looks broken, it gets reversed automatically before a visitor ever sees it.</p>
+        </div>
+        <div class="step rv">
+          <span class="s-n mono">04</span>
+          <h3>Undo, any time</h3>
+          <p>Restore one change, or roll back an entire AI session, from a single screen in your dashboard — or by asking the agent itself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <p class="sec-label rv">Under the hood</p>
+      <h2 class="rv">188 real abilities. Every write snapshot-wrapped.</h2>
+      <p class="lede-dim rv">
+        WP MCP registers every tool as an ability through the official
+        WordPress Abilities API and speaks the Model Context Protocol. The
+        names below are the real tools the agent calls, not marketing labels
+        — 163 free, 25 Pro, every one documented in&nbsp;<a href="/docs.html">the reference</a>.
+      </p>
+      <div class="ability-grid">
+        {abilityGroups.map((g) => (
+          <div class="card rv">
+            <p class="ag-head mono">{g.n} / <b>{g.tag}</b></p>
+            <h3>{g.label}</h3>
+            <p>{g.d}</p>
+            <div class="ag-chips">
+              {g.chips.map((c) => <span class="chip">{c}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Why WP MCP</p>
+      <h2 class="rv">Built for the moment the AI gets it wrong.</h2>
+      <div class="pick-grid">
+        {picks.map((p) => (
+          <div class="card rv">
+            <h3>{p.h}</h3>
+            <p>{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <p class="sec-label rv">Free vs Pro</p>
+      <h2 class="rv">The safety net is free. It is not the upsell.</h2>
+      <p class="lede-dim rv">
+        Pro adds reach and convenience for busy sites and the agencies that
+        run several of them. It does not gate the thing that keeps your site
+        safe.
+      </p>
+      <div class="price-grid">
+        <div class="card rv">
+          <p class="ag-head mono">core / <b>free</b></p>
+          <h3>Fully functional. No trial, no time limit.</h3>
+          <ul>
+            <li>The full save, change, check, and restore engine</li>
+            <li>163 abilities: content, media, menus, users, WooCommerce, SEO</li>
+            <li>One-click restore from your dashboard or the AI</li>
+            <li>Last 20 changes kept in history</li>
+            <li>GPL-2.0, self-hosted, no forced tracking</li>
+          </ul>
+          <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        </div>
+        <div class="card rv">
+          <p class="ag-head mono">pro / <b>via freemius · from $26.99/yr</b></p>
+          <h3>For busy sites and the agencies that run several.</h3>
+          <ul>
+            <li>Unlimited change history and full session restore</li>
+            <li>Elementor deep editing: 44-widget catalog, structural suite</li>
+            <li>Scoped agent identities and governance controls</li>
+            <li>Guarded WP-CLI and PHP execution, off by default</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn" href="/docs.html#free-vs-pro">Read free vs Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper verticals">
+    <div class="wrap">
+      <p class="sec-label rv">Where it earns its keep</p>
+      <h2 class="rv">Live stores. Site-wide SEO runs.</h2>
+      <div class="vert-grid">
+        <a class="card rv" href="/mcp-for-woocommerce.html">
+          <h3>MCP for WooCommerce →</h3>
+          <p>Let AI run your live store — products, prices, orders, reports — with every write snapshotted first and a one-click undo.</p>
+        </a>
+        <a class="card rv" href="/mcp-for-seo.html">
+          <h3>MCP for SEO →</h3>
+          <p>Bulk metadata edits across hundreds of posts through Yoast or Rank Math, with the whole session one click from undone.</p>
+        </a>
+      </div>
+      <p class="rv" style="margin-top: 26px">
+        <a href="/wp-mcp-vs-other-wordpress-mcp-tools.html">How WP MCP compares with the other WordPress MCP tools →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="closer">
+    <div class="wrap rv" style="text-align:center">
+      <h2>Let the AI build.<br />Keep the undo button.</h2>
+      <div class="hero-ctas" style="justify-content:center">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn" href={GITHUB_URL} rel="noopener">Star it on GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 90px 0 70px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .mark { color: var(--accent); }
+  .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px 0 30px; }
+  .lede-dim { color: inherit; opacity: 0.75; font-size: 1.08rem; margin: 16px 0 26px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-fine { margin-top: 22px; font-size: 0.78rem; color: var(--ink-faint); }
+
+  .terminal {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #080b10;
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(34, 211, 238, 0.06);
+    overflow: hidden;
+    transform: rotate(0.6deg);
+  }
+  .t-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-raise);
+  }
+  .t-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .t-bar i:first-child { background: var(--accent-deep); }
+  .t-bar span {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+  .t-body { padding: 22px; display: grid; gap: 13px; }
+  .t-body p { font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.5; max-width: none; }
+  .t-user { color: var(--ink); }
+  .t-tool { color: var(--ink-faint); padding-left: 14px; }
+  .t-tool b { color: var(--accent); font-weight: 600; }
+  .t-tool span { color: var(--ink-dim); }
+  .t-done { color: var(--good); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .t-body p { opacity: 0; animation: tin 0.45s ease forwards; }
+    .t-body p:nth-child(1) { animation-delay: 0.3s; }
+    .t-body p:nth-child(2) { animation-delay: 0.9s; }
+    .t-body p:nth-child(3) { animation-delay: 1.4s; }
+    .t-body p:nth-child(4) { animation-delay: 1.9s; }
+    .t-body p:nth-child(5) { animation-delay: 2.4s; }
+    .t-body p:nth-child(6) { animation-delay: 3.1s; }
+    @keyframes tin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+
+  .clients { padding: 34px 0 58px; }
+  .c-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .c-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  .problem { padding-top: 40px; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; }
+  .steps.four { grid-template-columns: repeat(4, 1fr); }
+  .s-n { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.15em; }
+  .paper .s-n { color: var(--accent-deep); }
+  .step h3 { margin: 10px 0 8px; }
+  .step p { color: var(--ink-dim); font-size: 0.98rem; }
+  .paper .step p { color: var(--paper-dim); }
+
+  .ability-grid, .pick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .ag-head {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .ag-head b { color: var(--accent); font-weight: 600; }
+  .paper .ag-head b { color: var(--accent-deep); }
+  .ability-grid h3, .pick-grid h3 { margin-bottom: 8px; }
+  .ability-grid .card p, .pick-grid .card p { font-size: 0.95rem; color: var(--ink-dim); }
+  .paper .card p { color: var(--paper-dim); }
+  .ag-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .price-grid h3 { margin-bottom: 14px; }
+  .price-grid ul { list-style: none; margin: 0 0 22px; }
+  .price-grid li {
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 9px;
+    color: var(--ink-dim);
+    font-size: 0.97rem;
+  }
+  .price-grid li::before { content: '✓'; position: absolute; left: 0; color: var(--good); }
+
+  .vert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 40px; }
+  .vert-grid .card { display: block; }
+  .vert-grid .card:hover { text-decoration: none; border-color: var(--accent-deep); }
+  .vert-grid h3 { margin-bottom: 8px; color: var(--paper-ink); }
+  .vert-grid p { font-size: 0.95rem; }
+
+  .closer { padding: 110px 0; }
+
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .terminal { transform: none; }
+    .steps, .steps.four, .ability-grid, .pick-grid, .price-grid, .vert-grid { grid-template-columns: 1fr; }
+  }
+</style>

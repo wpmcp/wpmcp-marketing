@@ -1,0 +1,235 @@
+/* WP MCP "control room" design system.
+   Cool near-black console, electric blue/cyan accent, IBM Plex
+   technical type with Bricolage Grotesque display. Layout system
+   shared with the EMCP blueprint-console skin; brand tokens are ours. */
+
+:root {
+  --ink: #e9eef5;
+  --ink-dim: #9aa7b7;
+  --ink-faint: #616e7e;
+  --bg: #0a0e14;
+  --bg-raise: #0f1520;
+  --bg-panel: #131b2a;
+  --line: #22304a;
+  --accent: #22d3ee;
+  --accent-deep: #2563eb;
+  --accent-soft: rgba(34, 211, 238, 0.12);
+  --good: #7ce38b;
+  --paper: #eef3f8;
+  --paper-ink: #101a2b;
+  --paper-dim: #5c6b7f;
+  --paper-line: #d2dce8;
+
+  --font-display: 'Bricolage Grotesque Variable', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --w: 1120px;
+  --radius: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 70% -10%, rgba(37, 99, 235, 0.16), transparent 60%),
+    radial-gradient(900px 400px at 0% 30%, rgba(6, 182, 212, 0.08), transparent 55%),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* faint console grid over the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  z-index: 0;
+}
+
+main { position: relative; z-index: 1; }
+
+.wrap {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 640;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+h3 { font-size: 1.25rem; }
+
+p { max-width: 62ch; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+::selection { background: var(--accent-deep); color: #fff; }
+
+/* section label: the console stamp */
+.sec-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.sec-label::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  max-width: 120px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+section { padding: 96px 0; }
+
+/* buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 13px 26px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--bg-raise);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); border-color: var(--ink-faint); }
+.btn-primary {
+  background: var(--accent-deep);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4);
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 24px -6px rgba(34, 211, 238, 0.55);
+  border-color: var(--accent);
+}
+
+/* mono chip, used for ability names everywhere */
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-raise);
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.chip b { color: var(--ink); font-weight: 500; }
+
+/* the light "datasheet" inversion for alternating sections */
+.paper {
+  background: var(--paper);
+  color: var(--paper-ink);
+}
+.paper h2, .paper h3 { color: var(--paper-ink); }
+.paper .sec-label { color: var(--accent-deep); }
+.paper a { color: var(--accent-deep); }
+.paper .chip { background: #fff; border-color: var(--paper-line); color: var(--paper-dim); }
+.paper .chip b { color: var(--paper-ink); }
+
+/* cards */
+.card {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+}
+.paper .card {
+  background: #fff;
+  border-color: var(--paper-line);
+}
+
+/* scroll-reveal */
+/* Scroll reveal is strictly progressive enhancement: the hidden state
+   only exists when JS has stamped html.js, so crawlers and no-JS
+   renders always see full content. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .rv {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  html.js .rv.in { opacity: 1; transform: none; }
+}
+
+/* tables */
+table { border-collapse: collapse; width: 100%; }
+th, td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+.paper th { color: var(--paper-dim); }
+.paper th, .paper td { border-color: var(--paper-line); }
+
+/* prose (markdown-rendered and legal pages) */
+.prose { max-width: 70ch; }
+.prose h2 { margin: 2.2em 0 0.6em; font-size: 1.7rem; }
+.prose h3 { margin: 1.8em 0 0.5em; }
+.prose p, .prose ul, .prose ol { margin-bottom: 1.1em; color: var(--ink-dim); }
+.prose li { margin-left: 1.2em; margin-bottom: 0.35em; }
+.prose strong { color: var(--ink); }
+.prose code {
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.prose pre {
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin-bottom: 1.2em;
+}
+.prose pre code { background: none; border: none; padding: 0; }
+.prose table { margin-bottom: 1.2em; }

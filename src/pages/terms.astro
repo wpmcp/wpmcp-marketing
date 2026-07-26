@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, ISSUES_URL } from '../consts';
+---
+
+<Base
+  title="Terms of service: WP MCP"
+  description="The terms governing use of wpmcp-pro.com and the WP MCP WordPress plugin: GPL licensing, the scope of the safety engine, warranties, and liability."
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="sec-label">Legal</p>
+      <h1>Terms of service.</h1>
+      <p class="lede">
+        These terms govern your use of wpmcp-pro.com and the WP MCP
+        WordPress plugin (published in source as <code>wpmcp</code>). WP MCP
+        is a product of Fahad Murtaza / iSuperCoder ("we", "us"). By using
+        this website, installing the plugin, or purchasing a Pro license,
+        you agree to these terms. Questions are always welcome at
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+      <p class="hero-fine mono">Last updated 26 July 2026</p>
+    </div>
+  </section>
+
+  <section class="legal">
+    <div class="wrap prose">
+      <h2>The software</h2>
+      <p>
+        WP MCP is distributed as source code on GitHub under the GNU General
+        Public License v2 or later (GPL-2.0-or-later), the same license as
+        WordPress itself. The core of the plugin — including the safety
+        engine (snapshot, apply, verify, rollback) and the broad free tool
+        surface — ships free. A Pro tier, billed through Freemius, adds
+        premium features such as unlimited history and Elementor deep
+        editing without changing the license of the underlying code.
+      </p>
+
+      <h2>Software license (GPL)</h2>
+      <p>
+        The GPL gives you the freedom to run, study, modify, and
+        redistribute the plugin's code, including forking it. It does not
+        extend to our trademarks: the WP MCP name and logo identify this
+        specific project and are not covered by the GPL grant. A Pro license
+        key controls access to premium feature activation, automatic
+        updates, and support, separate from the GPL-licensed code itself;
+        sharing, reselling, or circumventing the key system is not
+        permitted.
+      </p>
+
+      <h2>Use of the plugin on your site</h2>
+      <p>
+        WP MCP runs entirely on your own WordPress installation and
+        connects to an AI client of your choosing over the Model Context
+        Protocol, authenticated by a WordPress application password you
+        control. You are responsible for:
+      </p>
+      <ul>
+        <li>Which AI client you connect, and what permissions that connection carries.</li>
+        <li>Backups of your own site, independent of WP MCP's snapshot/rollback engine, which is a change-recovery tool, not a full site backup solution.</li>
+        <li>Complying with the terms of any AI provider (for example Anthropic or a Cursor-compatible client) you connect to your site.</li>
+        <li>Reviewing which tools are enabled and which capabilities they require before granting write access on a production site.</li>
+      </ul>
+
+      <h2>What the safety engine does and does not guarantee</h2>
+      <p>
+        WP MCP's snapshot-and-restore engine covers a specific, documented
+        set of object types: posts and pages (including WooCommerce products
+        and menu items, which are posts under the hood), options, users,
+        comments, and WooCommerce orders. A small set of deliberately risky
+        operations — raw database row writes, guarded code execution, and
+        permanent plugin/theme/file deletion — are disabled by default and,
+        where enabled, honestly report when they are not recoverable rather
+        than claiming an undo path that does not exist. Free-tier operation
+        history is capped at the most recent 20 operations; a long AI agent
+        session on the free tier can outrun that cap before it finishes. See
+        the <a href="/docs.html">documentation</a> for the current, precise
+        scope; we would rather you read exactly what is and is not covered
+        than assume it covers everything.
+      </p>
+
+      <h2>Support</h2>
+      <p>
+        Support for the free plugin is provided on a best-effort basis
+        through <a href={ISSUES_URL} rel="noopener">GitHub Issues</a>. Paid
+        support terms for the Pro tier are described at checkout.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>
+        You agree not to use the website or the plugin to break the law,
+        infringe others' rights, distribute malware, or attempt to disrupt
+        or gain unauthorized access to our services or those of others. You
+        may not misrepresent a modified copy of the plugin as an official WP
+        MCP (wpmcp) release, or use our trademarks to imply an affiliation
+        that does not exist.
+      </p>
+
+      <h2>Trademarks and content</h2>
+      <p>
+        The WP MCP name and logo are trademarks of Fahad Murtaza /
+        iSuperCoder. The GPL covers the plugin's code; it does not grant
+        rights to our trademarks or to the content of this website. You may
+        quote and link to our documentation with attribution.
+      </p>
+
+      <h2>Disclaimer of warranties</h2>
+      <p>
+        The website and the plugin are provided "as is" and "as available",
+        without warranties of any kind, express or implied, including
+        merchantability, fitness for a particular purpose, and
+        non-infringement, to the maximum extent permitted by law. This
+        mirrors the warranty disclaimer of the GPL. We do not warrant that
+        the plugin will be error-free, that every write will be recoverable,
+        or that it will work with every theme, plugin, or hosting
+        configuration. Read the documentation for the specific, current
+        scope of the undo guarantee before relying on it for a production
+        store.
+      </p>
+
+      <h2>Limitation of liability</h2>
+      <p>
+        To the maximum extent permitted by law, we will not be liable for
+        indirect, incidental, special, consequential, or exemplary damages,
+        or for lost profits, revenue, or data, arising from your use of the
+        website or the plugin, including from a change that turned out not
+        to be recoverable. Because the free plugin is provided at no cost,
+        our total liability for any claim relating to it is limited to the
+        greater of the amount you paid us for it (zero, for the free tier)
+        or a nominal sum where required by mandatory local law. Nothing in
+        these terms limits liability that cannot be limited by law, and
+        nothing affects consumer rights you hold under mandatory local law.
+      </p>
+
+      <h2>Termination</h2>
+      <p>
+        You can stop using the website and the plugin at any time, and can
+        uninstall the plugin like any other WordPress plugin. We may suspend
+        or terminate any paid license services (updates, support,
+        activations) for material breach of these terms, such as key resale
+        or license circumvention. Sections that by their nature should
+        survive termination, including licensing, disclaimers, and
+        limitation of liability, survive.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>
+        These terms are governed by the laws of Pakistan, without regard to
+        conflict-of-law rules, and disputes are subject to the exclusive
+        jurisdiction of the courts of Pakistan. If you use the plugin or
+        this website as a consumer, you retain any protections granted by
+        the mandatory laws of your country of residence.
+      </p>
+
+      <h2>Changes to these terms</h2>
+      <p>
+        We may update these terms as the product or the law changes. The
+        "last updated" date above reflects the most recent revision, and
+        material changes will be reflected here before they take effect.
+        Continued use after changes take effect constitutes acceptance.
+      </p>
+
+      <h2>General</h2>
+      <p>
+        If any provision of these terms is found invalid or unenforceable,
+        the remaining provisions continue in full force. These terms are the
+        entire agreement between you and us regarding the website and the
+        plugin, and supersede any prior representations or understandings.
+        We may assign our rights and obligations without notice; you may not
+        assign these terms without our written consent. By using the website
+        or plugin you confirm you are at least 16 years old, or the minimum
+        age of digital consent applicable in your country if higher, and
+        have authority to bind any organization on whose behalf you are
+        acting.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about these terms or licensing? Email
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also
+        our <a href="/privacy.html">privacy policy</a>, or read the
+        <a href="/docs.html">documentation</a> for the exact technical scope
+        of the safety engine.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-hero { padding: 90px 0 20px; }
+  .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px 0 18px; }
+  .hero-fine { font-size: 0.78rem; color: var(--ink-faint); }
+  .legal { padding-top: 40px; }
+</style>
