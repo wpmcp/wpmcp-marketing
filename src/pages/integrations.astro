@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../consts';
+import { INTEGRATIONS, CATEGORIES } from '../data/integrations';
+
+const byCategory = CATEGORIES.map((cat) => ({
+  cat,
+  items: INTEGRATIONS.filter((i) => i.category === cat),
+})).filter((g) => g.items.length > 0);
+
+const freeCount = INTEGRATIONS.filter((i) => i.tier === 'Free').length;
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Integrations', url: '/integrations.html' },
+];
+---
+
+<Base
+  title="Integrations: One AI, Every Plugin | WP MCP"
+  description="Dedicated MCP for the WordPress plugins you already run — WooCommerce, Yoast, Rank Math, ACF, Elementor, Bricks, Divi, Polylang, and Gutenberg. Reads on by default, writes opt-in, every write reversible."
+>
+  <Schema webPage={{ name: 'WP MCP Integrations', description: 'Dedicated MCP integrations for the WordPress plugins you already run.' }} breadcrumbs={crumbs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>Integrations</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <p class="eyebrow">Integrations</p>
+      <h1>One AI. Every plugin you already run.</h1>
+      <p class="lede">
+        WP MCP gives your AI agent a clean interface to the WordPress plugins you
+        already run — each a dedicated <b>MCP for X</b> that reads and writes real
+        data on your own server, driven by Claude, Cursor, or any MCP client. Reads
+        are on by default; writes are opt-in; and every write is snapshotted first.
+      </p>
+      <div class="stat-row" style="max-width:640px">
+        <div class="stat"><b>{INTEGRATIONS.length}</b><span>plugin integrations</span></div>
+        <div class="stat"><b>{freeCount}</b><span>free to use</span></div>
+        <div class="stat"><b>100%</b><span>of writes reversible</span></div>
+      </div>
+    </div>
+  </section>
+
+  {byCategory.map((group) => (
+    <section class="cat">
+      <div class="wrap">
+        <p class="sec-label rv">{group.cat}</p>
+        <div class="int-grid">
+          {group.items.map((i) => (
+            <a class="card rv" href={`/integrations/${i.slug}.html`}>
+              <div class="int-head">
+                <h3>MCP for {i.name}</h3>
+                <span class={`pill ${i.tier === 'Pro' ? 'pill-pro' : 'pill-free'}`}>{i.tier}</span>
+              </div>
+              <p>{i.blurb}</p>
+              <div class="int-chips">
+                {i.tools.slice(0, 3).map((t) => <span class="chip">{t}</span>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="paper">
+    <div class="wrap" style="text-align:center">
+      <p class="sec-label rv" style="justify-content:center">Don't see your plugin?</p>
+      <h2 class="rv">More integrations land every release.</h2>
+      <p class="rv" style="color:var(--paper-dim); max-width:56ch; margin:16px auto 26px">
+        WP MCP already ships 188 abilities across the whole site, and new integrations
+        are on the roadmap. Open an issue with the plugin you want next.
+      </p>
+      <div class="lp-ctas" style="justify-content:center">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn paper-btn" href="https://github.com/wpmcp/wpmcp/issues" rel="noopener">Request an integration</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lp-hero { padding: 40px 0 20px; }
+  .cat { padding: 46px 0; }
+  .int-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+  .int-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .int-grid a.card { display: block; }
+  .int-grid a.card:hover { text-decoration: none; border-color: var(--accent-deep); transform: translateY(-2px); }
+  .int-grid h3 { font-size: 1.08rem; }
+  .int-grid p { font-size: 0.92rem; color: var(--ink-dim); }
+  .int-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .pill { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .pill-free { background: rgba(124, 227, 139, 0.14); color: var(--good); border: 1px solid rgba(124, 227, 139, 0.3); }
+  .pill-pro { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(34, 211, 238, 0.3); }
+  .paper-btn { background: transparent; border-color: var(--paper-line); color: var(--paper-ink); }
+  @media (max-width: 880px) { .int-grid { grid-template-columns: 1fr; } }
+</style>

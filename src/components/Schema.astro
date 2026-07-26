@@ -1,0 +1,40 @@
+---
+/**
+ * Emits JSON-LD structured data. Pass any combination of:
+ *  - faqs: [{q, a}]        -> FAQPage (rich-result eligible)
+ *  - breadcrumbs: [{name, url}] -> BreadcrumbList
+ *  - webPage: {name, description} -> WebPage
+ *  - article: {headline, description, datePublished, dateModified?} -> BlogPosting + Person author
+ * Author/publisher default to the WP MCP / Fahad Murtaza entity.
+ */
+interface Faq { q: string; a: string }
+interface Crumb { name: string; url: string }
+interface Props {
+  faqs?: Faq[];
+  breadcrumbs?: Crumb[];
+  webPage?: { name: string; description: string };
+  article?: { headline: string; description: string; datePublished: string; dateModified?: string };
+}
+const { faqs, breadcrumbs, webPage, article } = Astro.props;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://wpmcp-pro.com';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const AUTHOR = { '@type': 'Person', name: 'Fahad Murtaza', url: `${site}/about.html` };
+const PUBLISHER = { '@type': 'Organization', name: 'WP MCP', url: site };
+
+const graph: unknown[] = [];
+if (webPage) {
+  graph.push({ '@type': 'WebPage', '@id': canonical, url: canonical, name: webPage.name, description: webPage.description, isPartOf: { '@type': 'WebSite', name: 'WP MCP', url: site } });
+}
+if (breadcrumbs?.length) {
+  graph.push({ '@type': 'BreadcrumbList', itemListElement: breadcrumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url.startsWith('http') ? c.url : `${site}${c.url}` })) });
+}
+if (faqs?.length) {
+  graph.push({ '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+}
+if (article) {
+  graph.push({ '@type': 'BlogPosting', headline: article.headline, description: article.description, datePublished: article.datePublished, dateModified: article.dateModified ?? article.datePublished, author: AUTHOR, publisher: PUBLISHER, mainEntityOfPage: canonical });
+}
+const jsonld = { '@context': 'https://schema.org', '@graph': graph };
+---
+{graph.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}

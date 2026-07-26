@@ -1,0 +1,137 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../consts';
+
+const faqs = [
+  { q: 'What is Gutenberg MCP?', a: 'It is a way for AI agents to build and edit WordPress block-editor (Gutenberg) content over the Model Context Protocol. WP MCP exposes surgical block tools — insert, update, move, duplicate, and remove blocks by position, plus block patterns — so Claude or Cursor edits the same block document the editor does. Everything it builds stays fully editable.' },
+  { q: 'Do I need a page builder or a Pro license?', a: 'No. Gutenberg editing is part of the free tier. Because Gutenberg ships with WordPress, this works on a stock install with no page builder and no paid plan. Elementor deep editing is the paid hook; the block editor is free.' },
+  { q: 'Are block edits reversible?', a: 'Yes. Every block write is snapshotted before it runs, so a single change or a whole agent session can be restored with one click — the same safety engine that protects every WP MCP mutation.' },
+  { q: 'How does the agent avoid mangling my markup?', a: 'The tools address blocks by index path and operate on the parsed block tree, not raw string replacement. The agent can read a post\'s block structure, inspect a block\'s schema, then insert or update precisely — no fragile find-and-replace on serialized HTML.' },
+  { q: 'Which clients work with it?', a: 'Any MCP-compatible client — Claude Code, Claude Desktop, Cursor, and others — over HTTP with an application password, or the WP-CLI stdio bridge for local development.' },
+];
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Gutenberg MCP', url: '/gutenberg-mcp.html' },
+];
+---
+
+<Base
+  title="Gutenberg MCP: Build WordPress Blocks With Any AI Agent | WP MCP"
+  description="Gutenberg MCP lets Claude, Cursor, and any AI agent build and edit WordPress block-editor content from a prompt — surgical block tools, patterns, fully reversible. Free, no page builder required."
+>
+  <Schema webPage={{ name: 'Gutenberg MCP', description: 'Build and edit WordPress Gutenberg blocks with any AI agent — free and reversible.' }} breadcrumbs={crumbs} faqs={faqs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>Gutenberg MCP</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <div class="hero-2col">
+        <div>
+          <p class="eyebrow">Gutenberg MCP · free tier</p>
+          <h1>Build Gutenberg blocks with any AI agent.</h1>
+          <p class="lede">
+            WP MCP gives Claude, Cursor, and any MCP client surgical control of the
+            WordPress block editor: insert, update, move, and duplicate blocks by
+            position, drop in patterns, and read the block tree before acting. No
+            page builder, no Pro license — and every edit is snapshotted first.
+          </p>
+          <div class="lp-ctas">
+            <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+            <a class="btn" href="/docs.html">Read the docs</a>
+          </div>
+          <p class="lp-fine">Free &amp; GPL-2.0 · ships with WordPress · fully reversible</p>
+          <div class="stat-row">
+            <div class="stat"><b>Free</b><span>Gutenberg is the free builder</span></div>
+            <div class="stat"><b>Surgical</b><span>index-path block editing</span></div>
+            <div class="stat"><b>1-click</b><span>rollback on every write</span></div>
+          </div>
+        </div>
+        <div class="mock rv" role="img" aria-label="An agent editing Gutenberg blocks">
+          <div class="mock-bar"><i></i><i></i><i></i><span>claude — connected to your-site.com</span></div>
+          <div class="mock-body">
+            <p class="m-user">› Add a pricing section under the hero on /pricing</p>
+            <p class="m-snap"><b>⛨</b> <span>page blocks saved · restorable</span></p>
+            <p class="m-tool"><b>insert-pattern</b> <span>"pricing-3col" at index 1</span></p>
+            <p class="m-tool"><b>update-block</b> <span>heading → "Simple pricing"</span></p>
+            <p class="m-done">✓ Done — open it in the editor, every block is native.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Discover, inspect, act</p>
+      <h2 class="rv">Block tools that don't guess.</h2>
+      <div class="moat-grid">
+        <div class="card rv"><h3>Read the tree first</h3><p><code>get-post-blocks</code> returns a post's parsed block tree with an index path per block; <code>list-block-types</code> and <code>get-block-type</code> expose the schema. The agent knows the structure before it edits.</p></div>
+        <div class="card rv"><h3>Edit by position</h3><p><code>add-block</code>, <code>update-block</code>, <code>move-block</code>, <code>duplicate-block</code>, and <code>remove-block</code> operate on precise index paths — not brittle string replacement on serialized markup.</p></div>
+        <div class="card rv"><h3>Patterns, not blank canvases</h3><p><code>insert-pattern</code> drops a registered pattern's markup in place, so the agent composes from real, designed building blocks.</p></div>
+        <div class="card rv"><h3>Reversible by construction</h3><p>Every write routes through the snapshot engine. Undo one block edit or a whole session from wp-admin — no separate backup step.</p></div>
+      </div>
+      <p class="rv" style="color:var(--paper-dim); max-width:64ch; margin-top:22px">
+        Prefer Elementor? Deep Elementor editing — a curated 44-widget catalog and a
+        structural suite — is available on Pro. See <a href="/elementor-mcp.html">Elementor MCP</a>.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Example prompts</p>
+      <h2 class="rv">Talk to the editor.</h2>
+      <div style="margin-top:28px; max-width:70ch">
+        <p class="prompt">Turn the last three paragraphs on /about into a two-column layout with a pull quote.</p>
+        <p class="prompt">Insert the FAQ pattern above the footer on every page in the Services category.</p>
+        <p class="prompt">Find the old pricing table block and replace it with the new three-tier pattern.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Frequently asked</p>
+      <h2 class="rv">Questions, answered.</h2>
+      <div class="faq rv">
+        {faqs.map((f) => (
+          <details><summary>{f.q}</summary><p>{f.a}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Keep exploring</p>
+      <div class="explore">
+        <a class="card rv" href="/elementor-mcp.html"><h3>Elementor MCP →</h3><p>Deep Elementor page-building on the Pro tier.</p></a>
+        <a class="card rv" href="/wordpress-mcp-plugin.html"><h3>WordPress MCP plugin →</h3><p>Install and connect your client in minutes.</p></a>
+        <a class="card rv" href="/wordpress-mcp-server.html"><h3>WordPress MCP server →</h3><p>The whole-site, self-hosted, capability-checked server.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-cta">
+    <div class="wrap rv">
+      <h2>Build Gutenberg pages from a prompt.</h2>
+      <div class="lp-ctas">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn" href="/docs.html">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-2col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 52px; align-items: center; }
+  .moat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+  .moat-grid h3 { margin-bottom: 8px; }
+  .moat-grid p { font-size: 0.95rem; color: var(--ink-dim); }
+  .paper .moat-grid p { color: var(--paper-dim); }
+  @media (max-width: 880px) {
+    .hero-2col { grid-template-columns: 1fr; }
+    .moat-grid { grid-template-columns: 1fr; }
+  }
+</style>

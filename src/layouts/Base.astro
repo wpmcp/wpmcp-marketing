@@ -21,12 +21,20 @@ const ogImage = new URL('/og-image.png', Astro.site);
 const nav = [
   { href: '/#how', label: 'How it works' },
   { href: '/#features', label: 'Features' },
+  { href: '/integrations.html', label: 'Integrations' },
   { href: '/#pricing', label: 'Pricing' },
   { href: '/docs.html', label: 'Docs' },
   { href: '/wp-mcp-vs-other-wordpress-mcp-tools.html', label: 'Compare' },
   { href: '/about.html', label: 'About' },
 ];
 const current = Astro.url.pathname;
+// Rotating announcement ticker.
+const ticker = [
+  '188 MCP abilities · works with Claude, Cursor & any MCP client',
+  'Snapshot before every write · one-click rollback, always on',
+  'New: deep Elementor editing on Pro — 44-widget catalog',
+  'Built on the official WordPress Abilities API · GPL-2.0, self-hosted',
+];
 ---
 
 <!doctype html>
@@ -78,6 +86,11 @@ const current = Astro.url.pathname;
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        {[...ticker, ...ticker].map((t) => <span class="ticker-item">{t}</span>)}
+      </div>
+    </div>
     <header>
       <div class="wrap bar">
         <a class="logo" href="/">
@@ -103,6 +116,19 @@ const current = Astro.url.pathname;
       <slot />
     </main>
 
+    <section class="newsletter">
+      <div class="wrap news-inner">
+        <div>
+          <h2>Release notes, straight to your inbox.</h2>
+          <p>One email per release — what shipped, what's verified, what's production-only. No drip campaigns. Unsubscribe in one click.</p>
+        </div>
+        <form class="news-form" action="https://github.com/wpmcp/wpmcp/releases" method="get" target="_blank" rel="noopener">
+          <input type="email" name="email" placeholder="you@agency.com" aria-label="Email address" />
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
     <footer>
       <div class="wrap foot">
         <div>
@@ -122,7 +148,11 @@ const current = Astro.url.pathname;
           </div>
           <div>
             <h4>Solutions</h4>
-            <a href="/docs.html">Documentation</a>
+            <a href="/wordpress-mcp-plugin.html">WordPress MCP plugin</a>
+            <a href="/wordpress-mcp-server.html">WordPress MCP server</a>
+            <a href="/gutenberg-mcp.html">Gutenberg MCP</a>
+            <a href="/elementor-mcp.html">Elementor MCP</a>
+            <a href="/integrations.html">Integrations</a>
             <a href="/mcp-for-woocommerce.html">MCP for WooCommerce</a>
             <a href="/mcp-for-seo.html">MCP for SEO</a>
           </div>
@@ -256,10 +286,67 @@ const current = Astro.url.pathname;
       }
       .colophon .mono { font-family: var(--font-mono); font-size: 0.75rem; }
 
+      /* announcement ticker */
+      .ticker {
+        overflow: hidden;
+        background: linear-gradient(90deg, var(--accent-deep), #1e3a8a);
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      .ticker-track {
+        display: inline-flex;
+        gap: 0;
+        animation: ticker 38s linear infinite;
+      }
+      .ticker-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 26px;
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.02em;
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .ticker-item::before { content: '✦'; margin-right: 26px; color: var(--accent); }
+      @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+
+      /* newsletter */
+      .newsletter {
+        border-top: 1px solid var(--line);
+        background:
+          radial-gradient(700px 240px at 80% -40%, rgba(37, 99, 235, 0.18), transparent 60%),
+          var(--bg-raise);
+      }
+      .news-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        padding: 52px 24px;
+        flex-wrap: wrap;
+      }
+      .news-inner h2 { font-size: 1.7rem; }
+      .news-inner p { color: var(--ink-dim); font-size: 0.98rem; margin-top: 8px; }
+      .news-form { display: flex; gap: 10px; flex: 1; min-width: 280px; max-width: 440px; }
+      .news-form input {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+      }
+      .news-form input::placeholder { color: var(--ink-faint); }
+      .news-form input:focus { outline: none; border-color: var(--accent); }
+
       @media (max-width: 820px) {
         nav { display: none; }
         .foot { grid-template-columns: 1fr; gap: 32px; }
         .colophon { flex-direction: column; }
+        .news-inner { flex-direction: column; align-items: flex-start; }
       }
     </style>
   </body>

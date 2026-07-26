@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import Schema from '../../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../../consts';
+import { INTEGRATIONS } from '../../data/integrations';
+
+export function getStaticPaths() {
+  return INTEGRATIONS.map((i) => ({ params: { slug: i.slug }, props: { i } }));
+}
+
+const { i } = Astro.props;
+// Six sibling cards, same-category first, for the internal-link mesh.
+const siblings = [
+  ...INTEGRATIONS.filter((x) => x.category === i.category && x.slug !== i.slug),
+  ...INTEGRATIONS.filter((x) => x.category !== i.category),
+].slice(0, 6);
+
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Integrations', url: '/integrations.html' },
+  { name: `MCP for ${i.name}`, url: `/integrations/${i.slug}.html` },
+];
+const metaDesc = `${i.blurb} WP MCP registers ${i.tools.slice(0, 3).join(', ')} so any MCP client (Claude, Cursor) can read and write ${i.name} on your own WordPress site — every write snapshotted first.`;
+---
+
+<Base title={`MCP for ${i.name}: Connect Your AI to ${i.name} | WP MCP`} description={metaDesc}>
+  <Schema webPage={{ name: `MCP for ${i.name}`, description: i.blurb }} breadcrumbs={crumbs} faqs={i.faqs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span><a href="/integrations.html">Integrations</a><span>/</span>{i.category}</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <div class="ih">
+        <div>
+          <p class="eyebrow">{i.category} integration</p>
+          <h1>MCP for {i.name}</h1>
+          <p class="lede">{i.does}</p>
+          <div class="lp-ctas">
+            <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+            <a class="btn" href="/docs.html">Read the docs</a>
+          </div>
+          <div class="int-chips">
+            {i.tools.map((t) => <span class="chip">{t}</span>)}
+          </div>
+        </div>
+        <aside class="spec card rv">
+          <dl>
+            <div><dt>Access</dt><dd><span class={`pill ${i.tier === 'Pro' ? 'pill-pro' : 'pill-free'}`}>{i.tier}</span></dd></div>
+            <div><dt>Requires</dt><dd>{i.requires}</dd></div>
+            <div><dt>Reads</dt><dd class="on">On by default</dd></div>
+            <div><dt>Writes</dt><dd>Opt-in</dd></div>
+            <div><dt>Every write</dt><dd class="on">Snapshotted &amp; reversible</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">What your AI can do</p>
+      <h2 class="rv">Real {i.name} operations, every write reversible.</h2>
+      <ul class="can rv">
+        {i.can.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap two">
+      <div>
+        <p class="sec-label rv">Example prompts</p>
+        <h2 class="rv">Just ask.</h2>
+        <div class="rv" style="margin-top:22px; max-width:60ch">
+          {i.prompts.map((p) => <p class="prompt">{p}</p>)}
+        </div>
+      </div>
+      <div>
+        <p class="sec-label rv">Under the hood</p>
+        <h2 class="rv">The real calls.</h2>
+        <div class="mock rv" style="margin-top:22px">
+          <div class="mock-bar"><i></i><i></i><i></i><span>wpmcp — {i.slug}</span></div>
+          <div class="mock-body">
+            {i.code.map((c) => (
+              <p class="m-tool"><b>{c.call}</b>{c.note && <span> — {c.note}</span>}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Frequently asked</p>
+      <h2 class="rv">Questions, answered.</h2>
+      <div class="faq rv">
+        {i.faqs.map((f) => (
+          <details><summary>{f.q}</summary><p>{f.a}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">More integrations</p>
+      <div class="int-grid">
+        {siblings.map((s) => (
+          <a class="card rv" href={`/integrations/${s.slug}.html`}>
+            <div class="int-head"><h3>MCP for {s.name}</h3><span class={`pill ${s.tier === 'Pro' ? 'pill-pro' : 'pill-free'}`}>{s.tier}</span></div>
+            <p>{s.blurb}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-cta">
+    <div class="wrap rv">
+      <h2>Point your AI at {i.name}.</h2>
+      <div class="lp-ctas">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn" href="/wordpress-mcp-server.html">How it works</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ih { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
+  .int-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+  .spec dl { display: grid; gap: 0; }
+  .spec dl > div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .spec dl > div:last-child { border-bottom: none; }
+  .spec dt { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
+  .spec dd { font-size: 0.9rem; color: var(--ink-dim); text-align: right; }
+  .spec dd.on { color: var(--good); }
+  .can { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; margin-top: 34px; max-width: 900px; }
+  .can li { position: relative; padding-left: 26px; color: var(--paper-dim); }
+  .can li::before { content: '✓'; position: absolute; left: 0; color: var(--good); font-weight: 700; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .int-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+  .int-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .int-grid a.card { display: block; }
+  .int-grid a.card:hover { text-decoration: none; border-color: var(--accent-deep); transform: translateY(-2px); }
+  .int-grid h3 { font-size: 1.05rem; }
+  .int-grid p { font-size: 0.9rem; color: var(--ink-dim); }
+  .pill { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .pill-free { background: rgba(124, 227, 139, 0.14); color: var(--good); border: 1px solid rgba(124, 227, 139, 0.3); }
+  .pill-pro { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(34, 211, 238, 0.3); }
+  @media (max-width: 880px) {
+    .ih, .two { grid-template-columns: 1fr; }
+    .can { grid-template-columns: 1fr; }
+    .int-grid { grid-template-columns: 1fr; }
+  }
+</style>

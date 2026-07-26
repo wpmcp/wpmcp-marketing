@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../consts';
+
+const faqs = [
+  { q: 'How do I install the WordPress MCP plugin?', a: 'Install the free wpmcp plugin from GitHub releases (wp.org listing planned), activate it, and it registers an MCP server on your site over the official WordPress Abilities API. Then paste the connection config into Claude, Cursor, or any MCP client. Most people are connected in a couple of minutes.' },
+  { q: 'Is WP MCP free?', a: 'Yes. The core plugin — 163 of its 188 abilities, plus the entire snapshot-before-every-write safety engine and one-click rollback — is free and GPL-2.0, self-hosted forever. Pro adds deep Elementor editing, unlimited history, and guarded execution tools.' },
+  { q: 'What are the requirements?', a: 'WordPress 6.8+ (the Abilities API ships in modern core), PHP 8.1+, and an MCP-compatible client. Elementor is optional — it is only needed for the Elementor-specific tools. Everything else works on any theme.' },
+  { q: 'How do I connect Claude or Cursor?', a: 'Authenticate with a WordPress application password over HTTP, or run the WP-CLI stdio bridge for local development. The plugin\'s admin screen shows a ready-made config block for each client.' },
+  { q: 'How does it get updates?', a: 'Free updates ship from GitHub releases; Pro updates and licensing run through Freemius. Either way the plugin lives entirely on your own server — nothing is proxied through us.' },
+];
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'WordPress MCP plugin', url: '/wordpress-mcp-plugin.html' },
+];
+---
+
+<Base
+  title="WordPress MCP Plugin: Install & Connect in Minutes | WP MCP"
+  description="WP MCP is the WordPress MCP plugin that connects Claude, Cursor, and any AI agent to your site — with a snapshot before every write. Install free, connect in minutes, manage all of WordPress from a prompt."
+>
+  <Schema webPage={{ name: 'WordPress MCP Plugin', description: 'Install and connect the WP MCP WordPress plugin in minutes.' }} breadcrumbs={crumbs} faqs={faqs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>WordPress MCP plugin</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <div class="hero-2col">
+        <div>
+          <p class="eyebrow">WordPress MCP plugin</p>
+          <h1>The WordPress MCP plugin that installs in minutes.</h1>
+          <p class="lede">
+            WP MCP is a single WordPress plugin that turns your site into a Model
+            Context Protocol server on the official Abilities API. Connect Claude,
+            Cursor, or any MCP client and manage Elementor and all of WordPress
+            from a prompt — with a snapshot saved before every write, so nothing
+            an agent does is ever unrecoverable.
+          </p>
+          <div class="lp-ctas">
+            <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+            <a class="btn" href="/docs.html">Read the docs</a>
+          </div>
+          <p class="lp-fine">GPL-2.0 core · WordPress 6.8+ · ~2 min to connect</p>
+          <div class="stat-row">
+            <div class="stat"><b>188</b><span>MCP abilities (163 free)</span></div>
+            <div class="stat"><b>100%</b><span>of writes snapshotted first</span></div>
+            <div class="stat"><b>1-click</b><span>rollback, per change or session</span></div>
+          </div>
+        </div>
+        <div class="mock rv" role="img" aria-label="Installing and connecting WP MCP">
+          <div class="mock-bar"><i></i><i></i><i></i><span>terminal — your-site.com</span></div>
+          <div class="mock-body">
+            <p class="m-user">$ wp plugin install wpmcp --activate</p>
+            <p class="m-tool"><b>✓</b> <span>MCP server live at /wp-json/wpmcp/v1</span></p>
+            <p class="m-user">$ claude mcp add wpmcp --transport http …</p>
+            <p class="m-snap"><b>⛨</b> <span>snapshot engine armed · rollback ready</span></p>
+            <p class="m-done">✓ Connected · 188 abilities active</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">What you need</p>
+      <h2 class="rv">Three things, and you're building.</h2>
+      <div class="flow rv">
+        <div class="flow-node"><p class="n">01 / You</p><h4>A prompt</h4><p>Describe the change in plain language to your AI client.</p></div>
+        <div class="flow-node"><p class="n">02 / Client</p><h4>Claude · Cursor</h4><p>Any MCP-compatible agent, connected over HTTP or stdio.</p></div>
+        <div class="flow-node"><p class="n">03 / WP MCP</p><h4>The plugin</h4><p>Snapshots, then runs the ability — on the Abilities API.</p></div>
+        <div class="flow-node"><p class="n">04 / WordPress</p><h4>Your site</h4><p>The change lands, with a Restore button next to it.</p></div>
+      </div>
+      <p class="rv" style="color:var(--paper-dim); max-width:64ch">
+        Requirements: WordPress 6.8+ (the Abilities API is in modern core), PHP 8.1+,
+        and an MCP client. Elementor is optional — needed only for the Elementor tools.
+        Everything runs on your own server; no proxy, no SaaS in the middle.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Install and connect</p>
+      <h2 class="rv">Four steps from zip to first prompt.</h2>
+      <div class="steps4">
+        <div class="card rv"><p class="step-n mono">01</p><h3>Install &amp; activate</h3><p>Drop in the free <code>wpmcp</code> plugin and activate it like any other. It self-registers on the WordPress Abilities API.</p></div>
+        <div class="card rv"><p class="step-n mono">02</p><h3>Enable the server</h3><p>The MCP endpoint goes live at <code>/wp-json/wpmcp/v1</code>. Reads are on; sensitive writes stay off until you opt in.</p></div>
+        <div class="card rv"><p class="step-n mono">03</p><h3>Connect your client</h3><p>Paste the generated config into Claude Code, Cursor, or Claude Desktop — app password over HTTP, or the WP-CLI stdio bridge locally.</p></div>
+        <div class="card rv"><p class="step-n mono">04</p><h3>Prompt</h3><p>Ask for the change. WP MCP snapshots the target, makes the edit, and leaves you a one-click undo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Frequently asked</p>
+      <h2 class="rv">Questions, answered.</h2>
+      <div class="faq rv">
+        {faqs.map((f) => (
+          <details><summary>{f.q}</summary><p>{f.a}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Keep exploring</p>
+      <div class="explore">
+        <a class="card rv" href="/wordpress-mcp-server.html"><h3>WordPress MCP server →</h3><p>How the self-hosted server works, and why it needs no proxy.</p></a>
+        <a class="card rv" href="/gutenberg-mcp.html"><h3>Gutenberg MCP →</h3><p>Build with the free block editor — no page builder required.</p></a>
+        <a class="card rv" href="/wp-mcp-vs-other-wordpress-mcp-tools.html"><h3>Compare tools →</h3><p>WP MCP vs the other WordPress MCP tools, on the undo question.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-cta">
+    <div class="wrap rv">
+      <h2>Add MCP to your WordPress in minutes.</h2>
+      <div class="lp-ctas">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn" href="/docs.html">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-2col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 52px; align-items: center; }
+  .steps4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .step-n { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.15em; margin-bottom: 10px; }
+  .steps4 h3 { margin-bottom: 8px; }
+  .steps4 p { font-size: 0.95rem; color: var(--ink-dim); }
+  @media (max-width: 880px) {
+    .hero-2col { grid-template-columns: 1fr; }
+    .steps4 { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../consts';
+
+const faqs = [
+  { q: 'What is Elementor MCP?', a: 'It is a way for AI agents to build and edit Elementor pages over the Model Context Protocol. WP MCP exposes Elementor\'s document model as MCP tools — a curated 44-widget catalog with typed, validated settings, plus a structural suite for containers and layout — so Claude or Cursor edits the same _elementor_data the editor does. Everything it builds stays fully editable.' },
+  { q: 'Do I need Elementor Pro?', a: 'No. The tools work with free Elementor. When Elementor Pro is active, the Pro widgets in the catalog become available too. WP MCP\'s own Elementor deep editing is part of its Pro tier.' },
+  { q: 'Are Elementor edits reversible?', a: 'Yes. _elementor_data is ordinary post meta, so the standard post snapshot captures it — every widget add, update, move, or removal is snapshotted before it runs and restorable with one click, per change or per session.' },
+  { q: 'How does the agent avoid producing broken layouts?', a: 'Widgets are validated against a curated schema before anything is written, and the structural tools enforce the row-layout rules that trip agents up — column widths, flex settings, alignment defaults. Writes require an expected hash of the current document, so a stale edit is rejected rather than clobbering newer changes.' },
+  { q: 'Which clients work with it?', a: 'Any MCP-compatible client — Claude Code, Claude Desktop, Cursor — over HTTP with an application password, or the WP-CLI stdio bridge locally.' },
+];
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Elementor MCP', url: '/elementor-mcp.html' },
+];
+---
+
+<Base
+  title="Elementor MCP: Build Elementor Pages With Any AI Agent | WP MCP"
+  description="Elementor MCP lets Claude, Cursor, and any AI agent build and edit real Elementor pages from a prompt — a curated 44-widget catalog, structural editing, validated and fully reversible."
+>
+  <Schema webPage={{ name: 'Elementor MCP', description: 'Build and edit Elementor pages with any AI agent — validated, catalog-backed, and reversible.' }} breadcrumbs={crumbs} faqs={faqs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>Elementor MCP</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <div class="hero-2col">
+        <div>
+          <p class="eyebrow">Elementor MCP · Pro</p>
+          <h1>Build real Elementor pages with any AI agent.</h1>
+          <p class="lede">
+            WP MCP exposes Elementor's document model to Claude, Cursor, and any MCP
+            client: a curated 44-widget catalog with typed, validated settings and a
+            structural suite for containers and layout. The agent edits the same
+            document Elementor does — validated before every write, and snapshotted
+            so any change is one click from undone.
+          </p>
+          <div class="lp-ctas">
+            <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+            <a class="btn" href="/docs.html">Read the docs</a>
+          </div>
+          <p class="lp-fine">Works with free Elementor · deep editing on Pro · fully reversible</p>
+          <div class="stat-row">
+            <div class="stat"><b>44</b><span>curated widgets, typed schemas</span></div>
+            <div class="stat"><b>Validated</b><span>before anything is written</span></div>
+            <div class="stat"><b>1-click</b><span>rollback on every edit</span></div>
+          </div>
+        </div>
+        <div class="mock rv" role="img" aria-label="An agent building an Elementor page">
+          <div class="mock-bar"><i></i><i></i><i></i><span>claude — connected to your-site.com</span></div>
+          <div class="mock-body">
+            <p class="m-user">› Build a hero: dark container, heading, subhead, button to /contact</p>
+            <p class="m-snap"><b>⛨</b> <span>_elementor_data saved · restorable</span></p>
+            <p class="m-tool"><b>add-container</b> <span>flex · background #0b1220</span></p>
+            <p class="m-tool"><b>add-widget</b> <span>heading + button (validated)</span></p>
+            <p class="m-done">✓ Hero built — open it in Elementor, fully editable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Discover, inspect, act</p>
+      <h2 class="rv">A catalog-backed workflow.</h2>
+      <div class="moat-grid">
+        <div class="card rv"><h3>Discover the catalog</h3><p><code>list-widgets</code> indexes 44 curated widgets; <code>get-widget-schema</code> returns their typed params. The agent picks from a known surface instead of guessing control names.</p></div>
+        <div class="card rv"><h3>Read before you write</h3><p><code>get-elementor-data</code> returns the parsed element tree with an expected hash. Writes carry that hash, so a stale edit is refused rather than overwriting newer work.</p></div>
+        <div class="card rv"><h3>Widgets &amp; structure</h3><p><code>add-widget</code> and <code>update-widget</code> place validated widgets; the structural suite (<code>add-container</code>, <code>move-element</code>, <code>duplicate-element</code>, <code>reorder-elements</code>) handles the layout gotchas.</p></div>
+        <div class="card rv"><h3>Reversible by construction</h3><p><code>_elementor_data</code> is post meta, so the standard snapshot captures it. Undo any widget or structural change, or a whole session, from wp-admin.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Example prompts</p>
+      <h2 class="rv">Describe the page.</h2>
+      <div style="margin-top:28px; max-width:70ch">
+        <p class="prompt">Add a three-column services section under the hero, each with an icon, heading, and text.</p>
+        <p class="prompt">Duplicate the testimonial container and change the two quotes to the ones in this list.</p>
+        <p class="prompt">Reorder the sections so pricing comes before the FAQ, and tighten the container padding.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Frequently asked</p>
+      <h2 class="rv">Questions, answered.</h2>
+      <div class="faq rv">
+        {faqs.map((f) => (
+          <details><summary>{f.q}</summary><p>{f.a}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Keep exploring</p>
+      <div class="explore">
+        <a class="card rv" href="/gutenberg-mcp.html"><h3>Gutenberg MCP →</h3><p>Prefer the free block editor? Build with blocks, no Pro needed.</p></a>
+        <a class="card rv" href="/wordpress-mcp-server.html"><h3>WordPress MCP server →</h3><p>The whole-site, self-hosted, capability-checked server.</p></a>
+        <a class="card rv" href="/#pricing"><h3>Pricing →</h3><p>Free core forever; deep Elementor editing on Pro.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-cta">
+    <div class="wrap rv">
+      <h2>Build your first Elementor page from a prompt.</h2>
+      <div class="lp-ctas">
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+        <a class="btn" href="/docs.html">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-2col { display: grid; grid-template-columns: 1.1fr 1fr; gap: 52px; align-items: center; }
+  .moat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+  .moat-grid h3 { margin-bottom: 8px; }
+  .moat-grid p { font-size: 0.95rem; color: var(--ink-dim); }
+  .paper .moat-grid p { color: var(--paper-dim); }
+  @media (max-width: 880px) {
+    .hero-2col { grid-template-columns: 1fr; }
+    .moat-grid { grid-template-columns: 1fr; }
+  }
+</style>
