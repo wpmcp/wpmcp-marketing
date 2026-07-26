@@ -24,7 +24,7 @@ CI runs on every push and pull request across a PHP 8.1 / 8.2 matrix: `composer 
 Tests are split into two PHPUnit test suites, matching the free/Pro split described in [Free vs Pro](50-free-vs-pro.md):
 
 - **`tests/free/`**, autoloaded as `WPMCP\Tests\Free\`, mirrors the `src/` structure: `Admin/`, `Content/`, `MCP/`, `Media/`, `Safety/`, `Settings/`, `Tools/`, plus root-level smoke and bootstrap tests. This is where the bulk of the coverage lives, including the safety engine's heaviest tests (`Safety/SafeMutationTest.php`, `Safety/RollbackServiceTest.php`, `Safety/SnapshotCaptureTest.php`, `Safety/SnapshotStoreCrudTest.php`, `Safety/SnapshotStoreInstallTest.php`).
-- **`tests/pro/`**, autoloaded as `WPMCP\Tests\Pro\`, currently just `Freemius/BootstrapTest.php` and `GateTest.php`. Small on purpose: there is no Pro tool surface shipped yet, so there is nothing else to test there today. This suite will grow as Pro features land.
+- **`tests/pro/`**, autoloaded as `WPMCP\Tests\Pro\`, covers the Pro ability surface: `Elementor/`, `Builders/`, `Analysis/`, `Cli/`, `Code/`, `Compose/`, `Media/`, `Freemius/`, plus `GateTest.php` for the gate itself.
 
 `phpunit.xml.dist` wires both suites (`free` -> `tests/free`, `pro` -> `tests/pro`) and defines the `WPMCP_TESTING` constant used by the bootstrap files to skip the plugin's normal `ABSPATH` guard during tests.
 

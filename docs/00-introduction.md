@@ -32,7 +32,7 @@ Most AI-for-WordPress tools focus entirely on the building and editing experienc
 
 ## Project status
 
-wpmcp is an early MVP. The safety engine (snapshot, apply, verify, rollback) and the first set of read/write tools are shipped and covered by tests. Some features described in the design spec (for example, Elementor deep editing, and unlimited history on a paid tier) are planned but not yet shipped. Where this documentation describes a planned feature, it says so explicitly.
+wpmcp is actively developed and past its feature-parity milestone: the safety engine (snapshot, apply, verify, rollback) and **188 registered abilities** (163 free, 25 Pro — including Elementor deep editing, the structural suite, and Bricks/Divi support) are shipped and covered by ~2,000 tests. A few integration paths (Polylang, multisite network calls, Google analytics/Search Console) are verified in production rather than CI, and release notes flag those honestly per release. Where this documentation describes a planned feature, it says so explicitly.
 
 ## Where to go next
 

@@ -19,7 +19,11 @@ npm run build   # outputs static site to dist/, flat .html URLs preserved
 
 Pages are `src/pages/*.astro`. Plugin docs are Markdown in `docs/` and
 render statically onto `/docs.html` (ordered by the `order` frontmatter
-field). External links live in `src/consts.ts`. Brand OG-image generator
+field). `docs/40-tools-reference.md` is GENERATED — after the plugin's
+ability surface changes, re-run
+`python3 scripts/generate-tools-reference.py [path-to-wpmcp]` (defaults to
+`~/Code/wpmcp`); it extracts every ability + description from the plugin
+source and cross-checks against `tests/support/ability-manifest.php`. External links live in `src/consts.ts`. Brand OG-image generator
 stays in `brand/og.html` (render at 1200x630 with headless Chrome →
 `public/og-image.png`, then `sips` to jpg).
 
