@@ -26,6 +26,7 @@ export const CATEGORIES = [
   'Events',
   'Donations',
   'Memberships',
+  'Directories',
   'Data tables',
   'SEO',
   'Custom fields',
@@ -632,6 +633,35 @@ export const INTEGRATIONS: Integration[] = [
     faqs: [
       { q: 'Can the agent change levels or memberships?', a: 'Not yet. This is a read-only view of levels and member counts. Levels and memberships are managed through PMPro\'s admin and its custom tables, which are not a WP MCP snapshot target, so writes are deferred until they can be made reversible.' },
       { q: 'Does it read member personal data?', a: 'It reports aggregate active member counts per level, not individual member records. The tools are capability-gated like the rest of WP MCP.' },
+    ],
+  },
+  {
+    slug: 'directories',
+    name: 'Directories',
+    category: 'Directories',
+    tier: 'Free',
+    requires: 'Directories active',
+    tools: ['list-post-types', 'list-posts', 'get-post', 'create-post', 'update-post'],
+    blurb: 'Manage directory listings through WP MCP\'s content tools, since Directories entities are custom post types.',
+    does: 'The Directories plugin registers each directory content type (its "bundles") as a WordPress custom post type, so directory listings are ordinary posts. WP MCP\'s content tools are post-type-agnostic: list-post-types discovers the directory bundles, list-posts lists their entries, get-post reads one listing (including its non-protected meta), and create-post / update-post add and edit listings, with every write snapshotted first. So an agent can inventory and manage directory listings with no Directories-specific integration. A regression test verifies the content tools list, read, create, and update an arbitrary custom post type.',
+    can: [
+      'Discover the directory content types (bundles) via list-post-types',
+      'List and read directory listings as custom posts',
+      'Create and update listings, snapshotted and reversible',
+      'Read a listing\'s non-protected custom fields',
+    ],
+    prompts: [
+      'What directory content types does this site have?',
+      'List the newest 20 listings in the business directory.',
+      'Create a draft listing titled "Acme Bakery" with this description.',
+    ],
+    code: [
+      { call: 'list-posts({ post_type: "<directory-bundle>" })', note: 'listings are ordinary CPT posts' },
+      { call: 'create-post({ post_type: "<directory-bundle>", title: "…", meta: {…} })', note: 'snapshotted' },
+    ],
+    faqs: [
+      { q: 'Is there a dedicated Directories integration?', a: 'Directory listings are custom post types, so WP MCP\'s content tools already list, read, create, and update them, snapshotted, with no Directories-specific adapter. That core coverage is verified by a regression test against an arbitrary custom post type.' },
+      { q: 'What about the plugin\'s extended fields?', a: 'Directories keeps some structured field data in its own drts_ tables beyond standard postmeta. Standard fields and content are covered through the content tools now; a curated reader for the plugin\'s extended field storage is future work, and we will not claim it until it ships.' },
     ],
   },
   {
