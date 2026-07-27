@@ -264,6 +264,88 @@ export const INTEGRATIONS: Integration[] = [
     ],
   },
   {
+    slug: 'formidable',
+    name: 'Formidable Forms',
+    category: 'Forms',
+    tier: 'Free',
+    requires: 'Formidable Forms active',
+    tools: ['formidable-read', 'list-forms', 'get-form', 'list-entries', 'get-entry'],
+    blurb: 'Read your Formidable forms, fields, and entries over MCP through Formidable\'s own models.',
+    does: 'Formidable Forms keeps its forms and submissions in its own tables, reached through the FrmForm and FrmEntry models. WP MCP exposes them to your AI agent as a read dispatcher: list forms, read a form and its fields, list a form\'s entries, and read a single entry. The agent reads exactly what Formidable itself returns, so it can triage and summarize submissions without touching anything.',
+    can: [
+      'List Formidable forms with names and keys',
+      'Read a form with its stored settings and fields',
+      'List a form\'s entries (submissions)',
+      'Read a single entry with its field values',
+    ],
+    prompts: [
+      'How many Booking form entries came in this week?',
+      'Summarize the latest Formidable submissions on the Feedback form.',
+      'Read entry 512 and tell me what the customer asked for.',
+    ],
+    code: [
+      { call: 'formidable-read({ operation: "list-forms" })', note: 'forms with names + keys' },
+      { call: 'formidable-read({ operation: "list-entries", args: { form_id: 5 } })', note: 'read-only' },
+    ],
+    faqs: [
+      { q: 'Can the agent edit Formidable entries?', a: 'Not yet. Read-only for now: Formidable entries live in Formidable\'s own tables, which are not a WP MCP snapshot target, so a write could not be one-click reversible. Entry writes land once they can be done recoverably.' },
+      { q: 'Does it work with Formidable Pro?', a: 'Yes. It uses the FrmForm and FrmEntry models present in Formidable, so Pro fields and forms read the same way.' },
+    ],
+  },
+  {
+    slug: 'contact-form-7',
+    name: 'Contact Form 7',
+    category: 'Forms',
+    tier: 'Free',
+    requires: 'Contact Form 7 active',
+    tools: ['contactform7-read', 'list-forms', 'get-form'],
+    blurb: 'Read your Contact Form 7 forms, their markup, and mail templates over MCP.',
+    does: 'Contact Form 7 stores forms as its own post type through the WPCF7_ContactForm model and, by design, does not store submissions itself. WP MCP exposes what CF7 actually has: list your forms, and read one form\'s markup and its mail template. That lets an agent audit and explain your forms and their email routing.',
+    can: [
+      'List Contact Form 7 forms with title and slug',
+      'Read a form\'s field markup (the [text], [email] tags)',
+      'Read a form\'s mail template (recipients, subject, body)',
+    ],
+    prompts: [
+      'List my Contact Form 7 forms.',
+      'Show me the mail template for the Contact form, who does it email?',
+      'Read the markup of the Quote form and list its fields.',
+    ],
+    code: [
+      { call: 'contactform7-read({ operation: "list-forms" })' },
+      { call: 'contactform7-read({ operation: "get-form", args: { form_id: 7 } })', note: 'markup + mail' },
+    ],
+    faqs: [
+      { q: 'Can I read Contact Form 7 submissions?', a: 'Contact Form 7 does not store submissions at all (that is what add-ons like Flamingo add), so there are no entries to read. This integration surfaces the forms, their markup, and their mail templates, which is CF7\'s whole data model.' },
+    ],
+  },
+  {
+    slug: 'wpforms',
+    name: 'WPForms',
+    category: 'Forms',
+    tier: 'Free',
+    requires: 'WPForms active',
+    tools: ['wpforms-read', 'list-forms', 'get-form'],
+    blurb: 'Read your WPForms forms and their field definitions over MCP.',
+    does: 'WPForms stores each form and its configuration through its own accessor, wpforms()->form. WP MCP exposes it as a read dispatcher: list your forms, and read one form with its decoded field definitions. An agent can inventory and explain your forms.',
+    can: [
+      'List WPForms forms with id and title',
+      'Read a form with its decoded field definitions',
+    ],
+    prompts: [
+      'List my WPForms forms.',
+      'What fields does the Newsletter signup form have?',
+      'Read form 3 and describe its structure.',
+    ],
+    code: [
+      { call: 'wpforms-read({ operation: "list-forms" })' },
+      { call: 'wpforms-read({ operation: "get-form", args: { form_id: 3 } })', note: 'decoded fields' },
+    ],
+    faqs: [
+      { q: 'Can the agent read WPForms entries?', a: 'Not yet. Forms and their field definitions are covered now; entry storage is a WPForms Pro feature with its own accessor, and entries could not be snapshotted for reversible writes, so entry access is deferred.' },
+    ],
+  },
+  {
     slug: 'acf',
     name: 'ACF & ACF Pro',
     category: 'Custom fields',
