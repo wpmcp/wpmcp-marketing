@@ -26,6 +26,68 @@
 
   --w: 1120px;
   --radius: 6px;
+
+  /* Themeable surfaces (dark defaults). Terminal/code surfaces stay dark in
+     both themes on purpose, so they are separate fixed tokens. */
+  --header-bg: rgba(10, 14, 20, 0.82);
+  --grid: rgba(255, 255, 255, 0.022);
+  --page-glow-1: rgba(37, 99, 235, 0.16);
+  --page-glow-2: rgba(6, 182, 212, 0.08);
+  --term-bg: #080b10;
+  --term-bar: #0f1520;
+  color-scheme: dark;
+}
+
+/* ============================================================
+   Light theme. Applied when the visitor's OS prefers light and they have
+   not forced dark, or when they explicitly choose light via the header
+   toggle (data-theme). Terminal/code surfaces (--term-*) stay dark.
+   ============================================================ */
+:root[data-theme="light"] {
+  --ink: #0f172a;
+  --ink-dim: #475569;
+  --ink-faint: #8a97a8;
+  --bg: #ffffff;
+  --bg-raise: #f1f5f9;
+  --bg-panel: #ffffff;
+  --line: #e2e8f0;
+  --accent: #0e7490;
+  --accent-deep: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.10);
+  --good: #15803d;
+  --paper: #eef3fb;
+  --paper-ink: #0f172a;
+  --paper-dim: #475569;
+  --paper-line: #dbe4f0;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --grid: rgba(15, 23, 42, 0.035);
+  --page-glow-1: rgba(37, 99, 235, 0.10);
+  --page-glow-2: rgba(6, 182, 212, 0.10);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ink: #0f172a;
+    --ink-dim: #475569;
+    --ink-faint: #8a97a8;
+    --bg: #ffffff;
+    --bg-raise: #f1f5f9;
+    --bg-panel: #ffffff;
+    --line: #e2e8f0;
+    --accent: #0e7490;
+    --accent-deep: #2563eb;
+    --accent-soft: rgba(37, 99, 235, 0.10);
+    --good: #15803d;
+    --paper: #eef3fb;
+    --paper-ink: #0f172a;
+    --paper-dim: #475569;
+    --paper-line: #dbe4f0;
+    --header-bg: rgba(255, 255, 255, 0.85);
+    --grid: rgba(15, 23, 42, 0.035);
+    --page-glow-1: rgba(37, 99, 235, 0.10);
+    --page-glow-2: rgba(6, 182, 212, 0.10);
+    color-scheme: light;
+  }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,8 +103,8 @@ body {
   line-height: 1.65;
   color: var(--ink);
   background:
-    radial-gradient(1200px 500px at 70% -10%, rgba(37, 99, 235, 0.16), transparent 60%),
-    radial-gradient(900px 400px at 0% 30%, rgba(6, 182, 212, 0.08), transparent 55%),
+    radial-gradient(1200px 500px at 70% -10%, var(--page-glow-1), transparent 60%),
+    radial-gradient(900px 400px at 0% 30%, var(--page-glow-2), transparent 55%),
     var(--bg);
   -webkit-font-smoothing: antialiased;
 }
@@ -54,8 +116,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 44px 44px;
   z-index: 0;
 }
@@ -327,7 +389,7 @@ th {
 .mock {
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #080b10;
+  background: var(--term-bg);
   box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(34, 211, 238, 0.06);
   overflow: hidden;
 }
@@ -336,9 +398,13 @@ th {
   align-items: center;
   gap: 7px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg-raise);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--term-bar);
 }
+/* Terminal mockups stay dark in both themes, so their inner text keeps its
+   dark-surface colors regardless of the page theme. */
+.mock .mock-body p { color: #9aa7b7; }
+.mock .m-user { color: #e9eef5; }
 .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
 .mock-bar i:first-child { background: var(--accent-deep); }
 .mock-bar span { margin-left: 8px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); }

@@ -14,7 +14,7 @@ Gutenberg block tools are block-source-agnostic: they read the whole block
 registry and operate on raw block markup, so an AI agent handles suite blocks
 exactly like core blocks. Every edit is snapshotted first.
 
-## Why it just works
+## Why it works
 
 Three free tools do the whole job for any block suite:
 

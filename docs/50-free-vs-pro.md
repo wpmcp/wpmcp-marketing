@@ -34,7 +34,7 @@ Plus, on Pro: **unlimited operation history** instead of the 20-operation cap.
 
 Free/Pro gating lives in `WPMCP\Pro\Gate`: a single boolean, `Gate::is_pro()`, backed by the Freemius SDK's `can_use_premium_code__premium_only()` when Freemius is active, and falling back safely to `false` when it isn't (no fatal error if the SDK is absent).
 
-The `MCP\Registrar` skips registering any ability tagged `'pro'` when `Gate::is_pro()` is false, so Pro tools simply do not appear in a free-tier site's tool list. The other concrete difference is history retention:
+The `MCP\Registrar` skips registering any ability tagged `'pro'` when `Gate::is_pro()` is false, so Pro tools do not appear in a free-tier site's tool list. The other concrete difference is history retention:
 
 ```php
 public static function history_limit(): int

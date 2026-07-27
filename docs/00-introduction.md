@@ -9,7 +9,7 @@ wpmcp is a WordPress plugin that turns a site into an MCP (Model Context Protoco
 
 ## The core promise
 
-Handing an AI agent write access to a live WordPress site is risky. A bad edit on a client's production site is the kind of mistake that is hard to walk back, and every other WordPress AI tool asks you to simply trust the model to get it right.
+Handing an AI agent write access to a live WordPress site is risky. A bad edit on a client's production site is the kind of mistake that is hard to walk back, and every other WordPress AI tool asks you to trust the model to get it right.
 
 wpmcp takes the opposite approach: it assumes the agent will get something wrong eventually, and makes sure that nothing it does is permanent.
 
