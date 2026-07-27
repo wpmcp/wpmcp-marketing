@@ -25,6 +25,7 @@ export const CATEGORIES = [
   'Forms',
   'Events',
   'Donations',
+  'Memberships',
   'Data tables',
   'SEO',
   'Custom fields',
@@ -602,6 +603,35 @@ export const INTEGRATIONS: Integration[] = [
     faqs: [
       { q: 'Can the agent read individual donations?', a: 'Not yet. The give-read surface covers donation forms and their totals. Individual donation records live in GiveWP\'s own tables, which are not a WP MCP snapshot target, so that access is deferred until it can be done safely.' },
       { q: 'Why a dedicated integration?', a: 'Give keeps form config in _give_* postmeta, which is underscore-prefixed protected meta that generic get-post hides. give-read reads those keys directly and returns clean named fields. Form create/edit still works through the content tools, snapshotted.' },
+    ],
+  },
+  {
+    slug: 'paid-memberships-pro',
+    name: 'Paid Memberships Pro',
+    category: 'Memberships',
+    tier: 'Free',
+    requires: 'Paid Memberships Pro active',
+    tools: ['pmpro-read', 'list-levels', 'get-level'],
+    blurb: 'Read your Paid Memberships Pro levels, pricing, and active member counts over MCP.',
+    does: 'Paid Memberships Pro stores membership levels and member assignments in its own custom tables (pmpro_membership_levels, pmpro_memberships_users), not post types. WP MCP reads those tables directly, the same way it reads the Gravity Tables custom table: list-levels returns each level with its initial and recurring price, billing cycle, whether signups are open, and its active member count; get-level returns one level\'s full configuration. So an agent can answer "how many active Gold members are there, and what does it cost?" without touching the database by hand.',
+    can: [
+      'List membership levels with pricing and billing cycle',
+      'See each level\'s active member count',
+      'Read one level\'s full configuration',
+      'Answer membership questions without writing SQL',
+    ],
+    prompts: [
+      'List the membership levels and how many active members each has.',
+      'What does the Gold level cost, and how often does it bill?',
+      'Read the configuration for level 2.',
+    ],
+    code: [
+      { call: 'pmpro-read({ operation: "list-levels" })', note: 'levels + active member counts' },
+      { call: 'pmpro-read({ operation: "get-level", args: { level_id: 1 } })', note: 'full level config' },
+    ],
+    faqs: [
+      { q: 'Can the agent change levels or memberships?', a: 'Not yet. This is a read-only view of levels and member counts. Levels and memberships are managed through PMPro\'s admin and its custom tables, which are not a WP MCP snapshot target, so writes are deferred until they can be made reversible.' },
+      { q: 'Does it read member personal data?', a: 'It reports aggregate active member counts per level, not individual member records. The tools are capability-gated like the rest of WP MCP.' },
     ],
   },
   {
