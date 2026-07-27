@@ -24,6 +24,7 @@ export const CATEGORIES = [
   'E-commerce',
   'Forms',
   'Events',
+  'Donations',
   'Data tables',
   'SEO',
   'Custom fields',
@@ -572,6 +573,35 @@ export const INTEGRATIONS: Integration[] = [
     ],
     faqs: [
       { q: 'Why a dedicated integration instead of the content tools?', a: 'The Events Calendar keeps event details in _Event* postmeta, which is underscore-prefixed protected meta that WP MCP\'s general get-post tool hides. The tec-read surface reads those keys directly and returns them as clean named fields. Creating and editing events still works through the content tools, snapshotted.' },
+    ],
+  },
+  {
+    slug: 'givewp',
+    name: 'GiveWP',
+    category: 'Donations',
+    tier: 'Free',
+    requires: 'GiveWP active',
+    tools: ['give-read', 'list-forms', 'get-form'],
+    blurb: 'Read your GiveWP donation forms, their pricing, goals, and running totals over MCP.',
+    does: 'GiveWP stores each donation form as a give_forms custom post type, with its configuration and running totals in underscore-prefixed _give_* postmeta (price, price option, donation levels, goal, earnings, sales). Those keys are protected meta that WP MCP\'s generic get-post tool hides, so this integration adds a curated, Give-aware read: list donation forms with their earnings and sales, and read one form\'s pricing, levels, goal, and totals as clean named fields. Creating and editing forms is available through the general content tools, since give_forms is an ordinary post type, with every write snapshotted first.',
+    can: [
+      'List donation forms with their running earnings and sales',
+      'Read a form\'s price, price option, and donation levels',
+      'Read a form\'s goal and progress totals',
+      'Create or edit donation forms through the content tools (snapshotted)',
+    ],
+    prompts: [
+      'How much has each donation form raised so far?',
+      'Read the Annual Fund form: its price, levels, and goal.',
+      'Which donation form has the most sales this year?',
+    ],
+    code: [
+      { call: 'give-read({ operation: "list-forms" })', note: 'forms with earnings + sales' },
+      { call: 'give-read({ operation: "get-form", args: { form_id: 42 } })', note: 'surfaces _give_* config as named fields' },
+    ],
+    faqs: [
+      { q: 'Can the agent read individual donations?', a: 'Not yet. The give-read surface covers donation forms and their totals. Individual donation records live in GiveWP\'s own tables, which are not a WP MCP snapshot target, so that access is deferred until it can be done safely.' },
+      { q: 'Why a dedicated integration?', a: 'Give keeps form config in _give_* postmeta, which is underscore-prefixed protected meta that generic get-post hides. give-read reads those keys directly and returns clean named fields. Form create/edit still works through the content tools, snapshotted.' },
     ],
   },
   {
