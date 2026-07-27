@@ -11,4 +11,18 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { docs };
+/** How-to tutorials, one Markdown file per guide in guides/, rendered onto
+ *  /guides.html (index) and /guides/<slug>.html. Every capability release
+ *  ships a matching guide here. */
+const guides = defineCollection({
+  loader: glob({ pattern: '*.md', base: './guides' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.string(),
+    integration: z.string().optional(),
+    order: z.number().default(100),
+  }),
+});
+
+export const collections = { docs, guides };

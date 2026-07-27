@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import Schema from '../../components/Schema.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((g) => ({ params: { slug: g.id }, props: { g } }));
+}
+
+const { g } = Astro.props;
+const { Content } = await render(g);
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Guides', url: '/guides.html' },
+  { name: g.data.title, url: `/guides/${g.id}.html` },
+];
+---
+
+<Base title={`${g.data.title} | WP MCP Guides`} description={g.data.description}>
+  <Schema
+    webPage={{ name: g.data.title, description: g.data.description }}
+    breadcrumbs={crumbs}
+    article={{ headline: g.data.title, description: g.data.description, datePublished: g.data.date }}
+  />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span><a href="/guides.html">Guides</a><span>/</span>Guide</div>
+
+  <article class="wrap guide">
+    <p class="g-date mono">{g.data.date}</p>
+    <div class="prose"><Content /></div>
+    <p class="back"><a href="/guides.html">All guides</a></p>
+  </article>
+</Base>
+
+<style>
+  .guide { padding: 34px 0 80px; max-width: 760px; }
+  .g-date { font-size: 0.74rem; letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 18px; }
+  .guide :global(h1) { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 0.5em; }
+  .back { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
+</style>

@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => a.data.order - b.data.order || b.data.date.localeCompare(a.data.date)
+);
+const crumbs = [
+  { name: 'WP MCP', url: '/' },
+  { name: 'Guides', url: '/guides.html' },
+];
+---
+
+<Base
+  title="Guides: learn WP MCP by example | WP MCP"
+  description="Step-by-step how-to guides for driving WordPress with an AI agent through WP MCP, one per capability."
+>
+  <Schema webPage={{ name: 'WP MCP Guides', description: 'How-to guides for WP MCP.' }} breadcrumbs={crumbs} />
+
+  <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>Guides</div>
+
+  <section class="lp-hero">
+    <div class="wrap">
+      <p class="eyebrow">Guides</p>
+      <h1>Learn WP MCP by example.</h1>
+      <p class="lede">
+        Short, concrete how-tos for driving WordPress with an AI agent through
+        WP MCP. Every capability we ship gets a guide here.
+      </p>
+    </div>
+  </section>
+
+  <section class="guides-list">
+    <div class="wrap">
+      <div class="g-grid">
+        {guides.map((g) => (
+          <a class="card rv" href={`/guides/${g.id}.html`}>
+            <p class="g-date mono">{g.data.date}</p>
+            <h3>{g.data.title}</h3>
+            <p>{g.data.description}</p>
+          </a>
+        ))}
+      </div>
+      {guides.length === 0 && <p class="lede-dim">Guides are on the way.</p>}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lp-hero { padding: 40px 0 20px; }
+  .lp-hero .lede { color: var(--ink-dim); font-size: 1.14rem; margin: 22px 0 0; max-width: 60ch; }
+  .guides-list { padding-top: 40px; }
+  .g-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .g-grid a.card { display: block; }
+  .g-grid a.card:hover { text-decoration: none; border-color: var(--accent-deep); transform: translateY(-2px); }
+  .g-date { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--ink-faint); margin-bottom: 8px; }
+  .g-grid h3 { margin-bottom: 8px; }
+  .g-grid p { font-size: 0.95rem; color: var(--ink-dim); }
+  @media (max-width: 880px) { .g-grid { grid-template-columns: 1fr; } }
+</style>
