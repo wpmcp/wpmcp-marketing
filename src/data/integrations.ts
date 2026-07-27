@@ -23,6 +23,7 @@ export const CATEGORIES = [
   'Block suites',
   'E-commerce',
   'Forms',
+  'Events',
   'Data tables',
   'SEO',
   'Custom fields',
@@ -514,6 +515,35 @@ export const INTEGRATIONS: Integration[] = [
     ],
     faqs: [
       { q: 'Can the agent read WPForms entries?', a: 'Not yet. Forms and their field definitions are covered now; entry storage is a WPForms Pro feature with its own accessor, and entries could not be snapshotted for reversible writes, so entry access is deferred.' },
+    ],
+  },
+  {
+    slug: 'modern-events-calendar',
+    name: 'Modern Events Calendar',
+    category: 'Events',
+    tier: 'Free',
+    requires: 'Modern Events Calendar active',
+    tools: ['mec-read', 'list-events', 'get-event'],
+    blurb: 'Read your Modern Events Calendar events and their schedules over MCP, with no meta-key knowledge needed.',
+    does: 'Modern Events Calendar stores each event as a mec-events custom post type, with its schedule in mec_* postmeta. WP MCP exposes a curated read surface: list events with their titles and start/end dates, and read one event\'s full schedule (start and end date and time, all-day flag, location and organizer ids, cost). The agent gets clean, named fields instead of raw mec_ meta keys. Creating and editing events is also possible through WP MCP\'s general content tools, since mec-events is an ordinary post type, with every write snapshotted first.',
+    can: [
+      'List events with titles and start/end dates',
+      'Read one event\'s curated schedule (dates, times, all-day, location, organizer, cost)',
+      'Answer scheduling questions without knowing MEC\'s meta keys',
+      'Create or edit events through the content tools (snapshotted)',
+    ],
+    prompts: [
+      'What events are coming up, and when?',
+      'Read the Launch Party event and tell me its start and end time and location.',
+      'List all events in August with their dates.',
+    ],
+    code: [
+      { call: 'mec-read({ operation: "list-events" })', note: 'events with dates, newest first' },
+      { call: 'mec-read({ operation: "get-event", args: { event_id: 42 } })', note: 'curated schedule' },
+    ],
+    faqs: [
+      { q: 'Can the agent create or change events?', a: 'The curated mec-read surface is read-only. Because MEC events are an ordinary custom post type, an agent can still create and edit them through WP MCP\'s general content tools (create-post / update-post with mec-events), and every such write is snapshotted and one click from undone.' },
+      { q: 'Do I need MEC Pro?', a: 'No. The integration reads the mec-events post type and mec_ meta that the free Modern Events Calendar registers.' },
     ],
   },
   {
