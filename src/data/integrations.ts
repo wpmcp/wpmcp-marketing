@@ -19,6 +19,7 @@ export interface Integration {
 
 export const CATEGORIES = [
   'Page builders',
+  'Elementor addons',
   'Block suites',
   'E-commerce',
   'Forms',
@@ -233,6 +234,90 @@ export const INTEGRATIONS: Integration[] = [
     faqs: [
       { q: 'Yoast or Rank Math, does WP MCP care which I use?', a: 'No. The same tools translate to whichever SEO plugin is active, using its own fields.' },
       { q: 'Is bulk SEO editing safe?', a: 'Every metadata write is snapshotted and session-grouped, so an over-broad change is reversible in one click.' },
+    ],
+  },
+  {
+    slug: 'essential-addons',
+    name: 'Essential Addons for Elementor',
+    category: 'Elementor addons',
+    tier: 'Pro',
+    requires: 'Essential Addons + Elementor active',
+    tools: ['list-widgets', 'get-elementor-data', 'add-widget', 'update-widget'],
+    blurb: 'Insert and edit Essential Addons widgets through WP MCP\'s Elementor tools, via the raw-settings escape hatch.',
+    does: 'Essential Addons registers extra Elementor widgets. WP MCP\'s Elementor deep-editing tools handle any registered widget: cataloged widgets take typed, validated params, and every other registered widget, including Essential Addons\' (eael-*), inserts through the raw settings escape hatch and reads back through get-elementor-data. So Essential Addons widgets are editable by an agent with no addon-specific integration, and every write is snapshotted first.',
+    can: [
+      'Read a page\'s full element tree, including Essential Addons widgets',
+      'Insert an Essential Addons widget by type with raw settings',
+      'Update an existing Essential Addons widget\'s settings',
+      'Roll back any change, since _elementor_data is snapshotted post meta',
+    ],
+    prompts: [
+      'Read the element tree on /home and list which Essential Addons widgets it uses.',
+      'Add an Essential Addons widget with these settings under the hero container.',
+      'Update the settings on the eael widget with this element id.',
+    ],
+    code: [
+      { call: 'add-widget({ post_id: 12, widget_type: "eael-...", settings: {…}, expected_hash })', note: 'raw-settings escape hatch, snapshotted' },
+      { call: 'get-elementor-data({ post_id: 12 })', note: 'reads all widgets, addon or core' },
+    ],
+    faqs: [
+      { q: 'Is there an Essential-Addons-specific integration?', a: 'It does not need one. WP MCP\'s add-widget accepts any registered Elementor widget through a raw settings escape hatch (a tested path), and get-elementor-data reads the whole element tree, so Essential Addons widgets are handled like any other. Curated typed params exist for a 44-widget core catalog; addon widgets use raw settings.' },
+    ],
+  },
+  {
+    slug: 'ultimate-addons-elementor',
+    name: 'Ultimate Addons for Elementor (UAE)',
+    category: 'Elementor addons',
+    tier: 'Pro',
+    requires: 'Ultimate Addons (UAE) + Elementor active',
+    tools: ['list-widgets', 'get-elementor-data', 'add-widget', 'update-widget'],
+    blurb: 'Insert and edit UAE widgets through WP MCP\'s Elementor tools, via the raw-settings escape hatch.',
+    does: 'Ultimate Addons for Elementor (UAE) registers extra Elementor widgets (uael-*). WP MCP\'s Elementor tools handle any registered widget: the curated catalog gives typed params for core widgets, and every other registered widget, UAE\'s included, inserts through the raw settings escape hatch and reads back through get-elementor-data. No UAE-specific integration, and every write is snapshotted first.',
+    can: [
+      'Read a page\'s element tree including UAE widgets',
+      'Insert a UAE widget by type with raw settings',
+      'Update an existing UAE widget\'s settings',
+      'Roll back any change via the post snapshot',
+    ],
+    prompts: [
+      'Which UAE widgets are on the pricing page?',
+      'Add a UAE widget under the features section with these settings.',
+      'Change the settings on this UAE element id.',
+    ],
+    code: [
+      { call: 'add-widget({ post_id: 8, widget_type: "uael-...", settings: {…}, expected_hash })', note: 'raw-settings escape hatch' },
+      { call: 'get-elementor-data({ post_id: 8 })', note: 'reads addon + core widgets' },
+    ],
+    faqs: [
+      { q: 'Do I need a UAE add-on for WP MCP?', a: 'No. UAE registers standard Elementor widgets, and add-widget\'s tested raw-settings escape hatch inserts any registered widget, so UAE is covered by the same Elementor tools that handle core widgets.' },
+    ],
+  },
+  {
+    slug: 'unlimited-elements',
+    name: 'Unlimited Elements for Elementor',
+    category: 'Elementor addons',
+    tier: 'Pro',
+    requires: 'Unlimited Elements + Elementor active',
+    tools: ['list-widgets', 'get-elementor-data', 'add-widget', 'update-widget'],
+    blurb: 'Insert and edit Unlimited Elements widgets through WP MCP\'s Elementor tools, via the raw-settings escape hatch.',
+    does: 'Unlimited Elements registers a large library of extra Elementor widgets. WP MCP\'s Elementor tools handle any registered widget: cataloged core widgets take typed params, and every other registered widget, including Unlimited Elements\', inserts through the raw settings escape hatch and reads back through get-elementor-data. No addon-specific integration, and every write is snapshotted first.',
+    can: [
+      'Read a page\'s element tree including Unlimited Elements widgets',
+      'Insert an Unlimited Elements widget by type with raw settings',
+      'Update an existing widget\'s settings',
+      'Roll back any change via the post snapshot',
+    ],
+    prompts: [
+      'List the Unlimited Elements widgets on the homepage.',
+      'Add an Unlimited Elements widget with these settings under the hero.',
+      'Update this Unlimited Elements element id\'s settings.',
+    ],
+    code: [
+      { call: 'add-widget({ post_id: 20, widget_type: "...", settings: {…}, expected_hash })', note: 'raw-settings escape hatch' },
+      { call: 'get-elementor-data({ post_id: 20 })' },
+    ],
+    faqs: [
+      { q: 'Why is Unlimited Elements covered without a dedicated integration?', a: 'Its widgets are standard registered Elementor widgets, and add-widget\'s tested raw-settings escape hatch inserts any registered widget while get-elementor-data reads the whole tree. So it is handled like core Elementor widgets.' },
     ],
   },
   {
