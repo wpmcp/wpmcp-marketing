@@ -460,6 +460,35 @@ export const INTEGRATIONS: Integration[] = [
     ],
   },
   {
+    slug: 'seopress',
+    name: 'SEOPress',
+    category: 'SEO',
+    tier: 'Free',
+    requires: 'SEOPress active',
+    tools: ['get-seo-meta', 'update-seo-meta', 'get-seo-status'],
+    blurb: 'Bulk-edit SEOPress metadata across the site from a prompt, through SEOPress\'s own fields, every change reversible.',
+    does: 'WP MCP writes SEO metadata through SEOPress\'s own postmeta fields, using one unified field set shared with Yoast and Rank Math. An AI agent can read and write meta titles and descriptions, focus keywords, canonicals, and noindex / nofollow flags across hundreds of posts. Each write is snapshotted before it lands, so a bulk metadata pass that goes wrong is one click from restored, and nothing changes in your SEOPress setup except who is doing the typing.',
+    can: [
+      'Read and write SEOPress meta title, description, and focus keyword',
+      'Set canonical URLs and noindex / nofollow flags',
+      'Run site-wide bulk metadata edits safely',
+      'Restore a single post or a whole bulk session',
+    ],
+    prompts: [
+      'Rewrite the meta descriptions across the blog, keep them under 155 characters.',
+      'Set noindex on the thin tag-archive posts.',
+      'Roll back the last SEO session, the canonicals went wrong.',
+    ],
+    code: [
+      { call: 'update-seo-meta({ post_id: 90, title: "…", description: "…" })', note: 'writes SEOPress fields; snapshotted' },
+      { call: 'rollback-session({ session_id })', note: 'one-click undo for the run' },
+    ],
+    faqs: [
+      { q: 'Yoast, Rank Math, or SEOPress, does WP MCP care which I use?', a: 'No. The same get-seo-meta / update-seo-meta tools translate to whichever SEO plugin is active, using its own fields. SEOPress is the third supported plugin.' },
+      { q: 'Is bulk SEO editing safe?', a: 'Every metadata write is snapshotted and grouped into a session, so an over-broad change is reversible in one click.' },
+    ],
+  },
+  {
     slug: 'acf',
     name: 'ACF & ACF Pro',
     category: 'Custom fields',

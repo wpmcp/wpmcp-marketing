@@ -4,11 +4,11 @@ import VerticalPage from '../components/VerticalPage.astro';
 
 <VerticalPage
   title="MCP for SEO: let AI agents do site-wide SEO work, every change undoable"
-  description="WP MCP lets AI agents rewrite meta titles, descriptions, keywords, canonicals, and robots flags across hundreds of posts through Yoast SEO or Rank Math, every write snapshotted, sessions one click from undone."
+  description="WP MCP lets AI agents rewrite meta titles, descriptions, keywords, canonicals, and robots flags across hundreds of posts through Yoast SEO, Rank Math, or SEOPress, every write snapshotted, sessions one click from undone."
   label="MCP for SEO"
   heading='Bulk SEO edits across the whole site. Every one of them <span class="mark">undoable</span>.'
-  lede="WP MCP lets an AI agent do the SEO work nobody enjoys: rewriting meta titles and descriptions, setting focus keywords, fixing canonicals, and flipping noindex and nofollow flags, across hundreds of posts, through Yoast SEO or Rank Math. Each write is snapshotted before it lands. If a bulk rewrite goes wrong on post two hundred, you roll the whole session back in one click instead of unpicking it by hand."
-  fine="Works with Yoast SEO and Rank Math · one-click session rollback · free and open, GPL-2.0"
+  lede="WP MCP lets an AI agent do the SEO work nobody enjoys: rewriting meta titles and descriptions, setting focus keywords, fixing canonicals, and flipping noindex and nofollow flags, across hundreds of posts, through Yoast SEO, Rank Math, or SEOPress. Each write is snapshotted before it lands. If a bulk rewrite goes wrong on post two hundred, you roll the whole session back in one click instead of unpicking it by hand."
+  fine="Works with Yoast SEO, Rank Math, and SEOPress · one-click session rollback · free and open, GPL-2.0"
   termHost="claude, connected to your-site.com"
   termAria="An AI agent doing a bulk SEO metadata run through WP MCP, with every write snapshotted and the session recoverable"
   termLines={[
@@ -26,9 +26,9 @@ import VerticalPage from '../components/VerticalPage.astro';
     { h: 'Every edit logged, every session one click from undone', d: 'Each metadata write is snapshotted through the same engine that protects every WP MCP change, and grouped into its session. Review the log, restore one post, or roll back the entire bulk run at once.' },
   ]}
   cardsHeading="Metadata, links, and context. Nothing invented."
-  cardsLede="These are the real ability names the agent calls, registered through the official WordPress Abilities API. WP MCP writes SEO metadata through the plugin you already run, Yoast SEO or Rank Math, using their own fields, so nothing changes in your SEO setup except who is doing the typing."
+  cardsLede="These are the real ability names the agent calls, registered through the official WordPress Abilities API. WP MCP writes SEO metadata through the plugin you already run, Yoast SEO, Rank Math, or SEOPress, using their own fields, so nothing changes in your SEO setup except who is doing the typing."
   cards={[
-    { n: '01', tag: 'safe change', h: 'Titles, descriptions, keywords, canonicals, robots', d: 'Read and write meta title, meta description, focus keyword, canonical URL, and noindex and nofollow flags per post, translated automatically to Yoast or Rank Math fields. Every write is snapshotted first.', chips: ['get-seo-meta', 'update-seo-meta', 'get-seo-status'] },
+    { n: '01', tag: 'safe change', h: 'Titles, descriptions, keywords, canonicals, robots', d: 'Read and write meta title, meta description, focus keyword, canonical URL, and noindex and nofollow flags per post, translated automatically to Yoast, Rank Math, or SEOPress fields. Every write is snapshotted first.', chips: ['get-seo-meta', 'update-seo-meta', 'get-seo-status'] },
     { n: '02', tag: 'read', h: 'Map the link graph, find the gaps', d: 'Build a site-wide internal link map, surface orphan posts nothing links to, and get suggestions for internal links worth adding. Read-only analysis the agent uses to plan its work.', chips: ['get-link-map', 'suggest-internal-links', 'find-orphan-posts'] },
     { n: '03', tag: 'read', h: 'The agent knows what site it is on', d: "One call gives the agent the site's structure, content inventory, and configuration, so a bulk metadata pass starts from what is actually there instead of guesses.", chips: ['get-site-context'] },
     { n: '04', tag: 'undo', h: 'Bulk sessions, rolled back in one click', d: "Every metadata edit lands in the operations log under its session. Restore a single post's metadata, or unwind an entire site-wide run, from the AI or from wp-admin.", chips: ['rollback-operation', 'rollback-session', 'list-operations'] },
