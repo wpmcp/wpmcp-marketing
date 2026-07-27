@@ -21,6 +21,7 @@ export const CATEGORIES = [
   'Page builders',
   'E-commerce',
   'Forms',
+  'Data tables',
   'SEO',
   'Custom fields',
   'Multilingual',
@@ -343,6 +344,34 @@ export const INTEGRATIONS: Integration[] = [
     ],
     faqs: [
       { q: 'Can the agent read WPForms entries?', a: 'Not yet. Forms and their field definitions are covered now; entry storage is a WPForms Pro feature with its own accessor, and entries could not be snapshotted for reversible writes, so entry access is deferred.' },
+    ],
+  },
+  {
+    slug: 'gravity-tables',
+    name: 'Gravity Tables',
+    category: 'Data tables',
+    tier: 'Free',
+    requires: 'Gravity Tables active',
+    tools: ['gravitytables-read', 'list-tables', 'get-table'],
+    blurb: 'Read the data tables you build from Gravity Forms entries, over MCP.',
+    does: 'Gravity Tables (Advanced Data Tables for Gravity Forms) turns Gravity Forms entries into published, filterable tables, storing each table definition in its own database table. WP MCP reads those definitions directly: list the tables a site publishes with their linked form and shortcode, and read one table\'s full configuration including selected fields, labels, and which columns are sortable or filterable. Because it pairs with the Gravity Forms integration, an agent can go from a published table to the underlying form and its entries in one session.',
+    can: [
+      'List published data tables with title, linked form id, and shortcode',
+      'Read one table\'s full configuration and decoded settings',
+      'See which fields are selected, labeled, sortable, and filterable',
+      'Follow a table through to its Gravity Forms form and entries',
+    ],
+    prompts: [
+      'List the data tables published on this site and which form each is built from.',
+      'What columns does the Sellers table show, and which are filterable?',
+      'Read the config for table 3 and explain what it displays.',
+    ],
+    code: [
+      { call: 'gravitytables-read({ operation: "list-tables" })', note: 'active tables with form + shortcode' },
+      { call: 'gravitytables-read({ operation: "get-table", args: { table_id: 3 } })', note: 'decoded settings' },
+    ],
+    faqs: [
+      { q: 'Can the agent build or edit tables?', a: 'Not yet. Read-only for now: table definitions are managed through the Gravity Tables builder and the plugin\'s custom table is not a WP MCP snapshot target, so edits could not be one-click reversible. Reading table configs is safe and pairs with the Gravity Forms integration for the underlying entries.' },
     ],
   },
   {
