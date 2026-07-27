@@ -19,6 +19,7 @@ export interface Integration {
 
 export const CATEGORIES = [
   'Page builders',
+  'Block suites',
   'E-commerce',
   'Forms',
   'Data tables',
@@ -232,6 +233,90 @@ export const INTEGRATIONS: Integration[] = [
     faqs: [
       { q: 'Yoast or Rank Math, does WP MCP care which I use?', a: 'No. The same tools translate to whichever SEO plugin is active, using its own fields.' },
       { q: 'Is bulk SEO editing safe?', a: 'Every metadata write is snapshotted and session-grouped, so an over-broad change is reversible in one click.' },
+    ],
+  },
+  {
+    slug: 'kadence-blocks',
+    name: 'Kadence Blocks',
+    category: 'Block suites',
+    tier: 'Free',
+    requires: 'Kadence Blocks active (for schemas)',
+    tools: ['list-block-types', 'get-block-type', 'add-block', 'update-block', 'insert-pattern'],
+    blurb: 'Build and edit Kadence blocks with WP MCP\'s universal Gutenberg block tools, no suite-specific setup.',
+    does: 'Kadence Blocks is a Gutenberg block library, and WP MCP\'s block tools are block-source-agnostic: list-block-types reads the whole block registry (so Kadence blocks appear alongside core), get-block-type returns any Kadence block\'s attributes, and add-block / update-block / insert-pattern edit them by markup at an index path. So Kadence is covered by the same free Gutenberg tools that handle core blocks, with no Kadence-specific integration to install. Every block edit is snapshotted first.',
+    can: [
+      'Discover Kadence blocks through the block registry (list-block-types)',
+      'Read a Kadence block\'s attributes (get-block-type)',
+      'Insert and update Kadence blocks by markup at a precise path',
+      'Roll back any block edit, per change or per session',
+    ],
+    prompts: [
+      'List the Kadence blocks available on this site.',
+      'Add a Kadence row-layout with three info-boxes under the hero on /services.',
+      'Change the heading in the second Kadence block on the homepage.',
+    ],
+    code: [
+      { call: 'list-block-types({ search: "kadence" })', note: 'surfaces kadence/* blocks' },
+      { call: 'add-block({ id: 12, markup: "<!-- wp:kadence/rowlayout ... -->", path: [1] })', note: 'snapshotted' },
+    ],
+    faqs: [
+      { q: 'Is there a Kadence-specific integration?', a: 'There does not need to be. Kadence Blocks registers standard Gutenberg blocks, and WP MCP\'s block tools operate on any registered block and on raw block markup, so Kadence is handled the same way as core blocks. That is verified by a regression test that drives a non-core block through list, inspect, and add.' },
+    ],
+  },
+  {
+    slug: 'generateblocks',
+    name: 'GenerateBlocks',
+    category: 'Block suites',
+    tier: 'Free',
+    requires: 'GenerateBlocks active (for schemas)',
+    tools: ['list-block-types', 'get-block-type', 'add-block', 'update-block', 'insert-pattern'],
+    blurb: 'Build and edit GenerateBlocks with WP MCP\'s universal Gutenberg block tools, no suite-specific setup.',
+    does: 'GenerateBlocks is a lightweight Gutenberg block library. WP MCP\'s block tools handle it with no dedicated adapter: list-block-types surfaces the generateblocks/* blocks, get-block-type exposes their attributes, and add-block / update-block edit them by markup. It is the same free Gutenberg surface that handles core blocks, and every edit is snapshotted first.',
+    can: [
+      'Discover GenerateBlocks blocks through the registry',
+      'Read a GenerateBlocks block\'s attributes',
+      'Insert and update GenerateBlocks by markup at a path',
+      'Roll back any block edit, per change or per session',
+    ],
+    prompts: [
+      'List the GenerateBlocks blocks registered on this site.',
+      'Add a GenerateBlocks container with a heading and a button to /contact.',
+      'Update the text in the first GenerateBlocks block on the About page.',
+    ],
+    code: [
+      { call: 'list-block-types({ search: "generateblocks" })' },
+      { call: 'update-block({ id: 8, path: [0], markup: "<!-- wp:generateblocks/headline ... -->" })', note: 'snapshotted' },
+    ],
+    faqs: [
+      { q: 'Do I need a GenerateBlocks add-on for WP MCP?', a: 'No. GenerateBlocks registers standard Gutenberg blocks, so WP MCP\'s universal block tools cover it the same way they cover core blocks. A regression test locks in that any non-core block flows through list, inspect, and add.' },
+    ],
+  },
+  {
+    slug: 'spectra',
+    name: 'Spectra',
+    category: 'Block suites',
+    tier: 'Free',
+    requires: 'Spectra active (for schemas)',
+    tools: ['list-block-types', 'get-block-type', 'add-block', 'update-block', 'insert-pattern'],
+    blurb: 'Build and edit Spectra (UAGB) blocks with WP MCP\'s universal Gutenberg block tools.',
+    does: 'Spectra (Ultimate Addons for Gutenberg, uagb/* blocks) is a Gutenberg block library. WP MCP\'s block tools handle it with no Spectra-specific integration: list-block-types surfaces its blocks, get-block-type exposes their attributes, and add-block / update-block edit them by markup at an index path. Same free Gutenberg surface as core blocks, snapshotted before every write.',
+    can: [
+      'Discover Spectra (uagb) blocks through the registry',
+      'Read a Spectra block\'s attributes',
+      'Insert and update Spectra blocks by markup at a path',
+      'Roll back any block edit, per change or per session',
+    ],
+    prompts: [
+      'List the Spectra blocks on this site.',
+      'Add a Spectra info-box section under the hero on the homepage.',
+      'Change the button label in the Spectra call-to-action block.',
+    ],
+    code: [
+      { call: 'list-block-types({ search: "uagb" })', note: 'Spectra blocks use the uagb namespace' },
+      { call: 'add-block({ id: 20, markup: "<!-- wp:uagb/info-box ... -->", path: [2] })', note: 'snapshotted' },
+    ],
+    faqs: [
+      { q: 'Why is Spectra covered without a dedicated integration?', a: 'Spectra registers standard Gutenberg blocks under the uagb namespace, and WP MCP\'s block tools work on any registered block and on raw markup. A regression test verifies a non-core block flows through list, inspect, and add, so Spectra is handled like core blocks.' },
     ],
   },
   {
