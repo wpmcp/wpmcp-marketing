@@ -547,6 +547,34 @@ export const INTEGRATIONS: Integration[] = [
     ],
   },
   {
+    slug: 'the-events-calendar',
+    name: 'The Events Calendar',
+    category: 'Events',
+    tier: 'Free',
+    requires: 'The Events Calendar active',
+    tools: ['tec-read', 'list-events', 'get-event'],
+    blurb: 'Read your The Events Calendar events and schedules over MCP, including the fields generic tools hide.',
+    does: 'The Events Calendar stores each event as a tribe_events custom post type with its schedule in underscore-prefixed _Event* postmeta (_EventStartDate, _EventEndDate, _EventVenueID, and so on). Those keys are protected meta that WP MCP\'s generic get-post tool deliberately hides, so this integration adds a curated, TEC-aware read: list events, and read one event\'s schedule as clean named fields (dates, all-day, venue and organizer ids, cost, URL). Creating and editing events is available through the general content tools, since tribe_events is an ordinary post type, with every write snapshotted first.',
+    can: [
+      'List events with titles and start/end dates',
+      'Read one event\'s curated schedule, including the underscore-prefixed fields',
+      'Answer scheduling questions without knowing TEC\'s meta keys',
+      'Create or edit events through the content tools (snapshotted)',
+    ],
+    prompts: [
+      'What are the next few events and their dates?',
+      'Read the Gala event: start and end time, venue, and cost.',
+      'List events happening in September.',
+    ],
+    code: [
+      { call: 'tec-read({ operation: "list-events" })', note: 'events with dates' },
+      { call: 'tec-read({ operation: "get-event", args: { event_id: 42 } })', note: 'surfaces _Event* meta as named fields' },
+    ],
+    faqs: [
+      { q: 'Why a dedicated integration instead of the content tools?', a: 'The Events Calendar keeps event details in _Event* postmeta, which is underscore-prefixed protected meta that WP MCP\'s general get-post tool hides. The tec-read surface reads those keys directly and returns them as clean named fields. Creating and editing events still works through the content tools, snapshotted.' },
+    ],
+  },
+  {
     slug: 'gravity-tables',
     name: 'Gravity Tables',
     category: 'Data tables',

@@ -39,6 +39,14 @@ status, and start/end date, newest first.
 `start_time`, `end_time`, `all_day`, `location_id`, `organizer_id`, and `cost`,
 resolved from MEC's meta so the agent works with named fields.
 
+## The Events Calendar works the same way
+
+If you run **The Events Calendar** instead of (or alongside) MEC, it has its
+own curated read surface, `tec-read`, with the same `list-events` and
+`get-event` operations. TEC keeps its schedule in underscore-prefixed
+`_Event*` meta that the generic tools hide, so the dedicated read is what
+surfaces those fields as clean named values. Same prompts, same shape.
+
 ## Creating and editing events
 
 The `mec-read` surface is read-only, but MEC events are an ordinary custom post
