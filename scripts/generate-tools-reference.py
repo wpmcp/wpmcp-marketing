@@ -237,8 +237,12 @@ def main():
             lines.append(f'- `{name}`{suffix}: {desc}')
         lines.append('')
 
-    OUT.write_text('\n'.join(lines))
-    print(f'wrote {OUT} — {len(seen)} abilities in {len(groups)} groups '
+    # House rule: no em-dashes or en-dashes in shipped content. Sanitize the
+    # whole output (covers our prose AND any dash in a plugin ability description).
+    text = '\n'.join(lines)
+    text = re.sub(r' *— *', ', ', text).replace('—', ', ').replace('–', '-')
+    OUT.write_text(text)
+    print(f'wrote {OUT}: {len(seen)} abilities in {len(groups)} groups '
           f'({len(conditional)} conditional beyond the {len(manifest)}-ability manifest)')
 
 

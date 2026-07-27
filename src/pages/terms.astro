@@ -29,9 +29,9 @@ import { CONTACT_EMAIL, ISSUES_URL } from '../consts';
       <p>
         WP MCP is distributed as source code on GitHub under the GNU General
         Public License v2 or later (GPL-2.0-or-later), the same license as
-        WordPress itself. The core of the plugin — including the safety
+        WordPress itself. The core of the plugin, including the safety
         engine (snapshot, apply, verify, rollback) and the broad free tool
-        surface — ships free. A Pro tier, billed through Freemius, adds
+        surface, ships free. A Pro tier, billed through Freemius, adds
         premium features such as unlimited history and Elementor deep
         editing without changing the license of the underlying code.
       </p>
@@ -68,8 +68,8 @@ import { CONTACT_EMAIL, ISSUES_URL } from '../consts';
         set of object types: posts and pages (including WooCommerce products
         and menu items, which are posts under the hood), options, users,
         comments, and WooCommerce orders. A small set of deliberately risky
-        operations — raw database row writes, guarded code execution, and
-        permanent plugin/theme/file deletion — are disabled by default and,
+        operations, raw database row writes, guarded code execution, and
+        permanent plugin/theme/file deletion, are disabled by default and,
         where enabled, honestly report when they are not recoverable rather
         than claiming an undo path that does not exist. Free-tier operation
         history is capped at the most recent 20 operations; a long AI agent

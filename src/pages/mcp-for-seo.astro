@@ -4,25 +4,25 @@ import VerticalPage from '../components/VerticalPage.astro';
 
 <VerticalPage
   title="MCP for SEO: let AI agents do site-wide SEO work, every change undoable"
-  description="WP MCP lets AI agents rewrite meta titles, descriptions, keywords, canonicals, and robots flags across hundreds of posts through Yoast SEO or Rank Math — every write snapshotted, sessions one click from undone."
+  description="WP MCP lets AI agents rewrite meta titles, descriptions, keywords, canonicals, and robots flags across hundreds of posts through Yoast SEO or Rank Math, every write snapshotted, sessions one click from undone."
   label="MCP for SEO"
   heading='Bulk SEO edits across the whole site. Every one of them <span class="mark">undoable</span>.'
   lede="WP MCP lets an AI agent do the SEO work nobody enjoys: rewriting meta titles and descriptions, setting focus keywords, fixing canonicals, and flipping noindex and nofollow flags, across hundreds of posts, through Yoast SEO or Rank Math. Each write is snapshotted before it lands. If a bulk rewrite goes wrong on post two hundred, you roll the whole session back in one click instead of unpicking it by hand."
   fine="Works with Yoast SEO and Rank Math · one-click session rollback · free and open, GPL-2.0"
-  termHost="claude — connected to your-site.com"
+  termHost="claude, connected to your-site.com"
   termAria="An AI agent doing a bulk SEO metadata run through WP MCP, with every write snapshotted and the session recoverable"
   termLines={[
     { type: 'user', text: '› Rewrite the meta descriptions across the blog, keep them under 155 chars' },
     { type: 'tool', b: '⛨ snapshot', s: 'SEO meta saved for 38 posts' },
     { type: 'tool', b: '⚒ update-seo-meta', s: 'descriptions rewritten × 38' },
     { type: 'tool', b: '⚒ get-seo-status', s: 'verifying lengths and canonicals' },
-    { type: 'done', text: '✓ Done. The whole run is one session — restorable in one click.' },
+    { type: 'done', text: '✓ Done. The whole run is one session, restorable in one click.' },
   ]}
   whyLabel="Why safety matters for SEO work"
   whyHeading="SEO mistakes are invisible until they are expensive."
   points={[
     { h: 'The damage shows up weeks later', d: 'A wrong price shows up in the next order. A wrong noindex or a broken canonical shows up weeks later, as traffic that quietly stopped coming. By then, nobody remembers which of the 300 edits did it.' },
-    { h: 'Bulk work is where agents earn their keep — and do the most damage', d: 'Rewriting metadata across a whole site is the perfect agent task: repetitive, rule-driven, boring. It is also one prompt misreading away from a site-wide mess. The answer is not to avoid bulk edits. It is to make them reversible.' },
+    { h: 'Bulk work is where agents earn their keep, and do the most damage', d: 'Rewriting metadata across a whole site is the perfect agent task: repetitive, rule-driven, boring. It is also one prompt misreading away from a site-wide mess. The answer is not to avoid bulk edits. It is to make them reversible.' },
     { h: 'Every edit logged, every session one click from undone', d: 'Each metadata write is snapshotted through the same engine that protects every WP MCP change, and grouped into its session. Review the log, restore one post, or roll back the entire bulk run at once.' },
   ]}
   cardsHeading="Metadata, links, and context. Nothing invented."

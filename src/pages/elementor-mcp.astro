@@ -4,11 +4,11 @@ import Schema from '../components/Schema.astro';
 import { INSTALL_FREE_URL } from '../consts';
 
 const faqs = [
-  { q: 'What is Elementor MCP?', a: 'It is a way for AI agents to build and edit Elementor pages over the Model Context Protocol. WP MCP exposes Elementor\'s document model as MCP tools — a curated 44-widget catalog with typed, validated settings, plus a structural suite for containers and layout — so Claude or Cursor edits the same _elementor_data the editor does. Everything it builds stays fully editable.' },
+  { q: 'What is Elementor MCP?', a: 'It is a way for AI agents to build and edit Elementor pages over the Model Context Protocol. WP MCP exposes Elementor\'s document model as MCP tools, a curated 44-widget catalog with typed, validated settings, plus a structural suite for containers and layout, so Claude or Cursor edits the same _elementor_data the editor does. Everything it builds stays fully editable.' },
   { q: 'Do I need Elementor Pro?', a: 'No. The tools work with free Elementor. When Elementor Pro is active, the Pro widgets in the catalog become available too. WP MCP\'s own Elementor deep editing is part of its Pro tier.' },
-  { q: 'Are Elementor edits reversible?', a: 'Yes. _elementor_data is ordinary post meta, so the standard post snapshot captures it — every widget add, update, move, or removal is snapshotted before it runs and restorable with one click, per change or per session.' },
-  { q: 'How does the agent avoid producing broken layouts?', a: 'Widgets are validated against a curated schema before anything is written, and the structural tools enforce the row-layout rules that trip agents up — column widths, flex settings, alignment defaults. Writes require an expected hash of the current document, so a stale edit is rejected rather than clobbering newer changes.' },
-  { q: 'Which clients work with it?', a: 'Any MCP-compatible client — Claude Code, Claude Desktop, Cursor — over HTTP with an application password, or the WP-CLI stdio bridge locally.' },
+  { q: 'Are Elementor edits reversible?', a: 'Yes. _elementor_data is ordinary post meta, so the standard post snapshot captures it, every widget add, update, move, or removal is snapshotted before it runs and restorable with one click, per change or per session.' },
+  { q: 'How does the agent avoid producing broken layouts?', a: 'Widgets are validated against a curated schema before anything is written, and the structural tools enforce the row-layout rules that trip agents up, column widths, flex settings, alignment defaults. Writes require an expected hash of the current document, so a stale edit is rejected rather than clobbering newer changes.' },
+  { q: 'Which clients work with it?', a: 'Any MCP-compatible client, Claude Code, Claude Desktop, Cursor, over HTTP with an application password, or the WP-CLI stdio bridge locally.' },
 ];
 const crumbs = [
   { name: 'WP MCP', url: '/' },
@@ -18,9 +18,9 @@ const crumbs = [
 
 <Base
   title="Elementor MCP: Build Elementor Pages With Any AI Agent | WP MCP"
-  description="Elementor MCP lets Claude, Cursor, and any AI agent build and edit real Elementor pages from a prompt — a curated 44-widget catalog, structural editing, validated and fully reversible."
+  description="Elementor MCP lets Claude, Cursor, and any AI agent build and edit real Elementor pages from a prompt, a curated 44-widget catalog, structural editing, validated and fully reversible."
 >
-  <Schema webPage={{ name: 'Elementor MCP', description: 'Build and edit Elementor pages with any AI agent — validated, catalog-backed, and reversible.' }} breadcrumbs={crumbs} faqs={faqs} />
+  <Schema webPage={{ name: 'Elementor MCP', description: 'Build and edit Elementor pages with any AI agent, validated, catalog-backed, and reversible.' }} breadcrumbs={crumbs} faqs={faqs} />
 
   <div class="wrap crumb"><a href="/">WP MCP</a><span>/</span>Elementor MCP</div>
 
@@ -34,7 +34,7 @@ const crumbs = [
             WP MCP exposes Elementor's document model to Claude, Cursor, and any MCP
             client: a curated 44-widget catalog with typed, validated settings and a
             structural suite for containers and layout. The agent edits the same
-            document Elementor does — validated before every write, and snapshotted
+            document Elementor does, validated before every write, and snapshotted
             so any change is one click from undone.
           </p>
           <div class="lp-ctas">
@@ -49,13 +49,13 @@ const crumbs = [
           </div>
         </div>
         <div class="mock rv" role="img" aria-label="An agent building an Elementor page">
-          <div class="mock-bar"><i></i><i></i><i></i><span>claude — connected to your-site.com</span></div>
+          <div class="mock-bar"><i></i><i></i><i></i><span>claude, connected to your-site.com</span></div>
           <div class="mock-body">
             <p class="m-user">› Build a hero: dark container, heading, subhead, button to /contact</p>
             <p class="m-snap"><b>⛨</b> <span>_elementor_data saved · restorable</span></p>
             <p class="m-tool"><b>add-container</b> <span>flex · background #0b1220</span></p>
             <p class="m-tool"><b>add-widget</b> <span>heading + button (validated)</span></p>
-            <p class="m-done">✓ Hero built — open it in Elementor, fully editable.</p>
+            <p class="m-done">✓ Hero built, open it in Elementor, fully editable.</p>
           </div>
         </div>
       </div>

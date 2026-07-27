@@ -108,8 +108,8 @@ import { GITHUB_URL } from '../consts';
         <p>
           Content, product, order-status, comment, menu, and settings
           changes are snapshotted and one-click undoable. A few deliberately
-          risky paths — raw database writes, guarded code execution, and
-          package or file deletions — are off by default and honestly report
+          risky paths, raw database writes, guarded code execution, and
+          package or file deletions, are off by default and honestly report
           that they are not covered by the undo guarantee, rather than
           pretending everything is reversible. Where the documentation
           describes a planned feature, it says so. We would rather
@@ -142,7 +142,7 @@ import { GITHUB_URL } from '../consts';
         <p>
           Development happens in the open on
           <a href={GITHUB_URL} rel="noopener">GitHub</a>, with honest
-          release notes — including which paths are verified in CI and which
+          release notes, including which paths are verified in CI and which
           are production-only.
         </p>
       </div>

@@ -4,12 +4,12 @@ import VerticalPage from '../components/VerticalPage.astro';
 
 <VerticalPage
   title="MCP for WooCommerce: let AI agents run your store, with an undo button"
-  description="WP MCP speaks WooCommerce natively: AI agents create products, update prices and stock, manage orders, and pull reports — every write snapshotted first, one click from undone."
+  description="WP MCP speaks WooCommerce natively: AI agents create products, update prices and stock, manage orders, and pull reports, every write snapshotted first, one click from undone."
   label="MCP for WooCommerce"
   heading='Let AI run your live store. Keep the <span class="mark">undo button</span>.'
   lede="WP MCP is an MCP server that runs inside WordPress and speaks WooCommerce natively. An AI agent like Claude or Cursor can create products, update prices and stock, review orders, change order status, and pull sales reports on your live store. Before every one of those writes, WP MCP saves a snapshot. If the agent gets a price wrong or flips the wrong order, one click puts it back exactly as it was."
   fine="Every store write snapshotted first · works with any MCP client · free and open, GPL-2.0"
-  termHost="claude — connected to your-store.com"
+  termHost="claude, connected to your-store.com"
   termAria="An AI agent updating a WooCommerce store through WP MCP, with a snapshot saved before every write"
   termLines={[
     { type: 'user', text: '› Put the 14 summer products on sale at 10% off' },
@@ -32,7 +32,7 @@ import VerticalPage from '../components/VerticalPage.astro';
     { n: '02', tag: 'safe change', h: 'Review orders, change status, add notes', d: 'List and inspect orders, move them through statuses, and attach order notes so the paper trail stays intact. Status changes are as undoable as a page edit.', chips: ['list-orders', 'get-order', 'update-order-status', 'add-order-note'] },
     { n: '03', tag: 'read', h: 'Sales reports and categories', d: 'Pull sales reports and browse product categories so the agent can answer "how did last week go?" before touching anything. Read-only by design.', chips: ['get-sales-report', 'list-product-categories'] },
     { n: '04', tag: 'undo', h: 'The undo, built into the write path', d: 'Restore a single change or unwind an entire agent session, from the AI itself or from wp-admin. No store write can bypass the snapshot engine.', chips: ['rollback-operation', 'rollback-session', 'list-operations'] },
-    { n: '05', tag: 'safe change', h: 'Your store is more than the catalog', d: 'The same agent also manages pages, media, menus, comments, users, and settings through the full WP MCP surface — 188 abilities, all behind the same safety net.', chips: ['create-post', 'update-post', 'update-media', 'create-menu'] },
+    { n: '05', tag: 'safe change', h: 'Your store is more than the catalog', d: 'The same agent also manages pages, media, menus, comments, users, and settings through the full WP MCP surface, 188 abilities, all behind the same safety net.', chips: ['create-post', 'update-post', 'update-media', 'create-menu'] },
     { n: '06', tag: 'guard-railed', h: 'Risky paths stay off by default', d: 'Permanent product deletion exists but is deliberately gated, and raw database writes are off by default and admin-only. Where something is not covered by the undo guarantee, the docs say so plainly.', chips: ['delete-product', 'query'] },
   ]}
   closerHeading="Let the AI run the store.<br />Keep the receipts."

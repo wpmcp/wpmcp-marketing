@@ -20,7 +20,7 @@ const crumbs = [
   { name: 'Integrations', url: '/integrations.html' },
   { name: `MCP for ${i.name}`, url: `/integrations/${i.slug}.html` },
 ];
-const metaDesc = `${i.blurb} WP MCP registers ${i.tools.slice(0, 3).join(', ')} so any MCP client (Claude, Cursor) can read and write ${i.name} on your own WordPress site — every write snapshotted first.`;
+const metaDesc = `${i.blurb} WP MCP registers ${i.tools.slice(0, 3).join(', ')} so any MCP client (Claude, Cursor) can read and write ${i.name} on your own WordPress site, every write snapshotted first.`;
 ---
 
 <Base title={`MCP for ${i.name}: Connect Your AI to ${i.name} | WP MCP`} description={metaDesc}>
@@ -79,10 +79,10 @@ const metaDesc = `${i.blurb} WP MCP registers ${i.tools.slice(0, 3).join(', ')} 
         <p class="sec-label rv">Under the hood</p>
         <h2 class="rv">The real calls.</h2>
         <div class="mock rv" style="margin-top:22px">
-          <div class="mock-bar"><i></i><i></i><i></i><span>wpmcp — {i.slug}</span></div>
+          <div class="mock-bar"><i></i><i></i><i></i><span>wpmcp, {i.slug}</span></div>
           <div class="mock-body">
             {i.code.map((c) => (
-              <p class="m-tool"><b>{c.call}</b>{c.note && <span> — {c.note}</span>}</p>
+              <p class="m-tool"><b>{c.call}</b>{c.note && <span>, {c.note}</span>}</p>
             ))}
           </div>
         </div>

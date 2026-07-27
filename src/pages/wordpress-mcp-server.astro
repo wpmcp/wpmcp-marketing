@@ -4,11 +4,11 @@ import Schema from '../components/Schema.astro';
 import { INSTALL_FREE_URL } from '../consts';
 
 const faqs = [
-  { q: 'What is a WordPress MCP server?', a: 'It is a server that exposes your WordPress site to AI agents over the Model Context Protocol — the open standard clients like Claude and Cursor use to call tools. WP MCP turns your own WordPress install into that server using the official Abilities API, so an agent can read and write content, media, users, settings, and the database directly, on your domain.' },
+  { q: 'What is a WordPress MCP server?', a: 'It is a server that exposes your WordPress site to AI agents over the Model Context Protocol, the open standard clients like Claude and Cursor use to call tools. WP MCP turns your own WordPress install into that server using the official Abilities API, so an agent can read and write content, media, users, settings, and the database directly, on your domain.' },
   { q: 'How is this different from Automattic\'s WordPress MCP connector?', a: 'Automattic\'s connector is an excellent way to expose WordPress to MCP, built on the same Abilities API foundation. The difference is the safety layer: WP MCP routes every mutating tool through one engine that snapshots the target before it changes, so a single operation or a whole agent session can be restored in one click. The connector focuses on exposing the surface; it does not ship a snapshot-and-restore engine around every write.' },
   { q: 'Is it secure to run?', a: 'The server runs inside your WordPress, authenticated as a real WordPress user via application password or OAuth. Every ability enforces a WordPress capability check, a six-layer governance model can only narrow what an identity may do, and every decision lands in an audit log. Destructive paths (raw DB writes, guarded code execution, permanent deletes) are off by default.' },
-  { q: 'Does it require Elementor?', a: 'No. The server manages core WordPress — posts, pages, media, menus, users, settings, plugins, themes, WooCommerce, SEO metadata — on any theme. Elementor deep editing is an optional Pro capability, not a requirement.' },
-  { q: 'Is there a proxy or SaaS in the path?', a: 'No. WP MCP is a single plugin that runs entirely inside WordPress — no separate Node process, no gateway service, no third party holding a copy of your site. The MCP endpoint lives on your own domain and nothing is proxied through us.' },
+  { q: 'Does it require Elementor?', a: 'No. The server manages core WordPress, posts, pages, media, menus, users, settings, plugins, themes, WooCommerce, SEO metadata, on any theme. Elementor deep editing is an optional Pro capability, not a requirement.' },
+  { q: 'Is there a proxy or SaaS in the path?', a: 'No. WP MCP is a single plugin that runs entirely inside WordPress, no separate Node process, no gateway service, no third party holding a copy of your site. The MCP endpoint lives on your own domain and nothing is proxied through us.' },
 ];
 const crumbs = [
   { name: 'WP MCP', url: '/' },
@@ -18,7 +18,7 @@ const crumbs = [
 
 <Base
   title="WordPress MCP Server: Run MCP on Your Own WordPress | WP MCP"
-  description="Turn WordPress into a self-hosted MCP server. AI agents manage content, plugins, users, media, and the database over MCP — capability-checked, snapshot-before-every-write, no proxy, no SaaS."
+  description="Turn WordPress into a self-hosted MCP server. AI agents manage content, plugins, users, media, and the database over MCP, capability-checked, snapshot-before-every-write, no proxy, no SaaS."
 >
   <Schema webPage={{ name: 'WordPress MCP Server', description: 'Run a self-hosted WordPress MCP server with snapshot-before-every-write safety.' }} breadcrumbs={crumbs} faqs={faqs} />
 
@@ -32,7 +32,7 @@ const crumbs = [
           <h1>A WordPress MCP server that runs on your own site.</h1>
           <p class="lede">
             WP MCP turns your WordPress install into a full Model Context Protocol
-            server — agents manage content, plugins, users, media, and the database
+            server, agents manage content, plugins, users, media, and the database
             (and build Elementor pages) from a prompt. It runs inside WordPress on
             the official Abilities API: no proxy, no SaaS, and a snapshot taken
             before every single write.
@@ -49,11 +49,11 @@ const crumbs = [
           </div>
         </div>
         <div class="mock rv" role="img" aria-label="Capability checks on a WordPress MCP server">
-          <div class="mock-bar"><i></i><i></i><i></i><span>wpmcp — capability checks</span></div>
+          <div class="mock-bar"><i></i><i></i><i></i><span>wpmcp, capability checks</span></div>
           <div class="mock-body">
             <p class="m-tool"><b>create-page</b> <span>edit_pages ✓</span></p>
             <p class="m-tool"><b>install-plugin</b> <span>install_plugins ✓</span></p>
-            <p class="m-snap"><b>update-user</b> <span>edit_users — admin untouchable ✕</span></p>
+            <p class="m-snap"><b>update-user</b> <span>edit_users, admin untouchable ✕</span></p>
             <p class="m-snap"><b>delete-rows</b> <span>needs confirm:true ✕</span></p>
             <p class="m-done">✓ every write snapshotted · every call logged</p>
           </div>
@@ -70,14 +70,14 @@ const crumbs = [
         <div class="flow-node"><p class="n">You</p><h4>A brief</h4><p>Plain-language intent, typed into your client.</p></div>
         <div class="flow-node"><p class="n">AI client</p><h4>Claude · Cursor</h4><p>Speaks MCP over HTTP or stdio.</p></div>
         <div class="flow-node"><p class="n">WP MCP</p><h4>The server</h4><p>Abilities API endpoint on your domain.</p></div>
-        <div class="flow-node"><p class="n">WordPress</p><h4>Your data</h4><p>Content, store, users, DB — snapshotted first.</p></div>
+        <div class="flow-node"><p class="n">WordPress</p><h4>Your data</h4><p>Content, store, users, DB, snapshotted first.</p></div>
       </div>
       <p class="rv" style="color:var(--paper-dim); max-width:66ch">
         WP MCP registers the endpoint at <code>/wp-json/wpmcp/v1</code> through the
         official WordPress Abilities API and the MCP Adapter. It reaches past the page
         builder: content and pages, plugins and themes, users and media, WooCommerce,
         SEO metadata, a read-mostly database and filesystem surface, and read-only
-        performance and security scanners — all on your own server.
+        performance and security scanners, all on your own server.
       </p>
     </div>
   </section>
@@ -94,7 +94,7 @@ const crumbs = [
         second, and can restore on demand.
       </p>
       <div class="moat-grid">
-        <div class="card rv"><h3>Snapshot before every write</h3><p>Enforced in code, not by convention. A before-image is captured for the affected post, option, user, comment, or order — that is what one-click restore reads from.</p></div>
+        <div class="card rv"><h3>Snapshot before every write</h3><p>Enforced in code, not by convention. A before-image is captured for the affected post, option, user, comment, or order, that is what one-click restore reads from.</p></div>
         <div class="card rv"><h3>Rollback a change or a session</h3><p>Undo a single operation, or unwind an entire agent session, from wp-admin or from the agent itself. HPOS- and CPT-safe for WooCommerce.</p></div>
         <div class="card rv"><h3>Governance + audit</h3><p>A six-layer permission model where each layer only narrows, never widens. Scoped agent identities, and every decision recorded in a governance audit log.</p></div>
         <div class="card rv"><h3>Runs inside WordPress</h3><p>No Node proxy, no gateway, no copy of your site held off-server. Your data stays self-hosted; we never see your content or your agent's prompts.</p></div>
@@ -118,7 +118,7 @@ const crumbs = [
     <div class="wrap">
       <p class="sec-label rv">Keep exploring</p>
       <div class="explore">
-        <a class="card rv" href="/wordpress-mcp-plugin.html"><h3>WordPress MCP plugin →</h3><p>Install and connect in minutes — the fast path.</p></a>
+        <a class="card rv" href="/wordpress-mcp-plugin.html"><h3>WordPress MCP plugin →</h3><p>Install and connect in minutes, the fast path.</p></a>
         <a class="card rv" href="/integrations.html"><h3>Integrations →</h3><p>Dedicated MCP for ACF, Yoast, Rank Math, WooCommerce, and more.</p></a>
         <a class="card rv" href="/wp-mcp-vs-other-wordpress-mcp-tools.html"><h3>Compare tools →</h3><p>How WP MCP stacks up against the field on undo and audit.</p></a>
       </div>
