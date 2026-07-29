@@ -40,7 +40,7 @@ export const INTEGRATIONS: Integration[] = [
     category: 'Page builders',
     tier: 'Pro',
     requires: 'Elementor active',
-    tools: ['get-elementor-data', 'add-widget', 'update-widget', 'add-container', 'get-global-settings', 'update-global-colors', 'update-global-typography'],
+    tools: ['get-elementor-data', 'add-widget', 'update-widget', 'add-container', 'get-global-settings', 'update-global-colors', 'update-global-typography', 'save-as-template', 'apply-template', 'export-page', 'import-template'],
     blurb: 'Deep Elementor page-building from a curated 44-widget catalog, plus global colors and fonts, validated and reversible.',
     does: 'Elementor stores every page as a JSON document in the _elementor_data post meta. WP MCP exposes that document to your AI agent through a curated 44-widget catalog with typed settings schemas, plus a structural suite for containers and layout. It also reads and writes the active kit, so the agent can restyle the whole site by editing global colors and typography. The agent reads the real element tree, then adds, updates, moves, or removes widgets, validated before every write, and snapshotted so any edit is one click from undone.',
     can: [
@@ -48,6 +48,7 @@ export const INTEGRATIONS: Integration[] = [
       'Add and update widgets from a validated 44-widget catalog',
       'Build and rearrange flexbox containers with the structural suite',
       'Edit the kit\'s global colors and typography to restyle the whole site',
+      'Save, apply, export, and import Elementor library templates',
       'Duplicate, reorder, and relabel elements safely',
       'Roll back any widget, structural, or global-style change, per edit or per session',
     ],
