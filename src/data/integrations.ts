@@ -51,6 +51,7 @@ export const INTEGRATIONS: Integration[] = [
       'Save, apply, export, and import Elementor library templates',
       'Build theme parts (header, footer, single, archive) and set display conditions',
       'Build Elementor v4 atomic elements (flexbox, div-block, atomic widgets)',
+      'Create popups, set triggers, and bind dynamic tags',
       'Duplicate, reorder, and relabel elements safely',
       'Roll back any widget, structural, or global-style change, per edit or per session',
     ],
