@@ -725,8 +725,58 @@ export const INTEGRATIONS: Integration[] = [
       { call: 'rollback-session({ session_id })', note: 'one-click undo for the run' },
     ],
     faqs: [
-      { q: 'Yoast, Rank Math, or SEOPress, does WP MCP care which I use?', a: 'No. The same get-seo-meta / update-seo-meta tools translate to whichever SEO plugin is active, using its own fields. SEOPress is the third supported plugin.' },
+      { q: 'Yoast, Rank Math, or SEOPress, does WP MCP care which I use?', a: 'No. The same get-seo-meta / update-seo-meta tools translate to whichever SEO plugin is active, using its own fields. Yoast, Rank Math, SEOPress, The SEO Framework, and SureRank are all supported.' },
       { q: 'Is bulk SEO editing safe?', a: 'Every metadata write is snapshotted and grouped into a session, so an over-broad change is reversible in one click.' },
+    ],
+  },
+  {
+    slug: 'the-seo-framework',
+    name: 'The SEO Framework',
+    category: 'SEO',
+    tier: 'Free',
+    requires: 'The SEO Framework active',
+    tools: ['get-seo-meta', 'update-seo-meta', 'get-seo-status'],
+    blurb: 'Read and write The SEO Framework metadata from a prompt, through its own fields, every change reversible.',
+    does: 'WP MCP reads and writes SEO metadata through The SEO Framework\'s own _genesis_* postmeta fields, using one unified field set shared with Yoast, Rank Math, and SEOPress. An AI agent can read and write meta titles, descriptions, canonicals, and noindex / nofollow flags across the site. Each write is snapshotted before it lands, so a bulk pass that goes wrong is one click from restored.',
+    can: [
+      'Read and write The SEO Framework meta title and description',
+      'Set canonical URLs and noindex / nofollow flags',
+      'Bulk-edit SEO metadata across many posts, snapshotted per change',
+    ],
+    prompts: [
+      'Rewrite the meta descriptions on the blog category to be under 155 characters.',
+      'Set noindex on all the thank-you pages.',
+    ],
+    code: [
+      { call: 'update-seo-meta({ post_id: 42, title: "New title", description: "New description" })', note: 'translated to _genesis_* fields, snapshotted' },
+    ],
+    faqs: [
+      { q: 'Does WP MCP support The SEO Framework specifically?', a: 'Yes. It maps the unified field set onto The SEO Framework\'s _genesis_* postmeta, the same way it handles Yoast, Rank Math, SEOPress, and SureRank.' },
+    ],
+  },
+  {
+    slug: 'surerank',
+    name: 'SureRank',
+    category: 'SEO',
+    tier: 'Free',
+    requires: 'SureRank active',
+    tools: ['get-seo-meta', 'update-seo-meta', 'get-seo-status'],
+    blurb: 'Read and write SureRank metadata from a prompt, through its own storage, every change reversible.',
+    does: 'WP MCP reads and writes SEO metadata through SureRank\'s own storage (a single _surerank_meta post-meta array), using one unified field set shared with Yoast, Rank Math, SEOPress, and The SEO Framework. An AI agent can read and write meta titles, descriptions, canonicals, and noindex / nofollow flags, and each write is snapshotted before it lands, so a bulk pass is one click from restored.',
+    can: [
+      'Read and write SureRank meta title and description',
+      'Set canonical URLs and noindex / nofollow flags',
+      'Bulk-edit SEO metadata across many posts, snapshotted per change',
+    ],
+    prompts: [
+      'Give every product a meta title in the format "Name | Brand".',
+      'Noindex the tag archives.',
+    ],
+    code: [
+      { call: 'update-seo-meta({ post_id: 42, title: "New title", noindex: true })', note: 'merged into the _surerank_meta array, snapshotted' },
+    ],
+    faqs: [
+      { q: 'How does WP MCP store SureRank fields?', a: 'SureRank keeps everything in a single _surerank_meta array; WP MCP reads and merges into that array so partial edits preserve your other SureRank settings, and every write is snapshotted.' },
     ],
   },
   {
@@ -785,6 +835,89 @@ export const INTEGRATIONS: Integration[] = [
     faqs: [
       { q: 'Does EMCP or other Elementor MCP tools support Polylang?', a: 'Not that we\'ve seen, multilingual (Polylang) is a lane WP MCP covers that Elementor-focused MCP tools do not.' },
       { q: 'Is Polylang support production-verified?', a: 'The Polylang paths are verified against a live Polylang install; CI can\'t exercise every third-party plugin, and we flag that honestly per release.' },
+    ],
+  },
+  {
+    slug: 'meta-box',
+    name: 'Meta Box',
+    category: 'Custom fields',
+    tier: 'Free',
+    requires: 'Meta Box active',
+    tools: ['metabox-read', 'metabox-write', 'list-meta-boxes', 'get-fields', 'update-fields'],
+    blurb: 'Read and write Meta Box custom field values over MCP through Meta Box\'s own API, snapshotted and reversible.',
+    does: 'Meta Box stores custom field values as ordinary post meta, reached through its public rwmb_meta and rwmb_set_meta functions. WP MCP exposes those to your AI agent as a read/write dispatcher: list the registered meta boxes and their fields, read a post\'s field values by key, and set field values. Writes are default-off and snapshotted on the post, so every change is one click from undone.',
+    can: [
+      'List registered meta boxes with their fields and post types',
+      'Read a post\'s Meta Box field values by key',
+      'Set Meta Box field values (opt-in), snapshotted on the post',
+      'Roll back any field write, since values are ordinary post meta',
+    ],
+    prompts: [
+      'What Meta Box fields does the Team post type have?',
+      'Read the subtitle and rating fields on post 42.',
+      'Set the subtitle on the About page to this new line.',
+    ],
+    code: [
+      { call: 'metabox-read({ operation: "get-fields", args: { post_id: 42, keys: ["subtitle", "rating"] } })', note: 'read field values by key' },
+      { call: 'metabox-write({ operation: "update-fields", args: { post_id: 42, fields: { subtitle: "New" } } })', note: 'opt-in, snapshotted, reversible' },
+    ],
+    faqs: [
+      { q: 'Are Meta Box writes reversible?', a: 'Yes. Meta Box values are ordinary post meta, so the standard post snapshot captures them and rollback-operation restores them exactly. Writes are also default-off until you enable them with the wpmcp_enable_metabox_write filter.' },
+      { q: 'Do I need Meta Box Pro?', a: 'No. The integration uses Meta Box\'s standard rwmb_meta / rwmb_set_meta API, available in the free plugin.' },
+    ],
+  },
+  {
+    slug: 'ninja-forms',
+    name: 'Ninja Forms',
+    category: 'Forms',
+    tier: 'Free',
+    requires: 'Ninja Forms active',
+    tools: ['ninjaforms-read', 'list-forms', 'get-form'],
+    blurb: 'Read your Ninja Forms forms and field definitions over MCP through Ninja Forms\' own model API.',
+    does: 'Ninja Forms stores forms and fields in its own models, reached through the Ninja_Forms()->form() accessor. WP MCP exposes that to your AI agent as a read dispatcher: list forms and read a form\'s field definitions. Nothing is bypassed; the agent reads exactly what Ninja Forms itself returns.',
+    can: [
+      'List Ninja Forms forms with id and title',
+      'Read a form\'s field definitions (id, type, label)',
+      'Answer questions about your forms and their structure',
+    ],
+    prompts: [
+      'List my Ninja Forms and what fields each one has.',
+      'What field types does the Contact form use?',
+    ],
+    code: [
+      { call: 'ninjaforms-read({ operation: "list-forms" })', note: 'forms with id + title' },
+      { call: 'ninjaforms-read({ operation: "get-form", args: { form_id: 8 } })', note: 'field definitions, read-only' },
+    ],
+    faqs: [
+      { q: 'Can the agent read submissions?', a: 'Not yet. This integration is read-only on forms: Ninja Forms submissions live in their own objects that WP MCP does not snapshot, so entry access is deferred until it can be done recoverably, the same posture as the other form integrations.' },
+      { q: 'Do I need a Ninja Forms add-on?', a: 'No. It uses the standard Ninja_Forms() model API in the core plugin.' },
+    ],
+  },
+  {
+    slug: 'fluent-forms',
+    name: 'Fluent Forms',
+    category: 'Forms',
+    tier: 'Free',
+    requires: 'Fluent Forms active',
+    tools: ['fluentforms-read', 'list-forms', 'get-form'],
+    blurb: 'Read your Fluent Forms forms and decoded field definitions over MCP through Fluent Forms\' own query builder.',
+    does: 'Fluent Forms stores forms in its own table, reached through the wpFluent() query builder. WP MCP exposes that to your AI agent as a read dispatcher: list forms and read a form\'s decoded field definitions. Nothing is bypassed; the agent reads exactly what Fluent Forms itself stores.',
+    can: [
+      'List Fluent Forms forms with id and title',
+      'Read a form\'s decoded field definitions (name, element, label)',
+      'Answer questions about your forms and their structure',
+    ],
+    prompts: [
+      'List my Fluent Forms and the fields each one collects.',
+      'What fields does the Signup form have?',
+    ],
+    code: [
+      { call: 'fluentforms-read({ operation: "list-forms" })', note: 'forms with id + title' },
+      { call: 'fluentforms-read({ operation: "get-form", args: { form_id: 4 } })', note: 'decoded fields, read-only' },
+    ],
+    faqs: [
+      { q: 'Can the agent read entries?', a: 'Not yet. Fluent Forms submissions live in their own tables that WP MCP does not snapshot, so entry access is deferred until it can be done recoverably, the same posture as the other form integrations.' },
+      { q: 'Do I need Fluent Forms Pro?', a: 'No. It uses the standard wpFluent() query builder in the free plugin.' },
     ],
   },
 ];
