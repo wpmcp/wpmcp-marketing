@@ -53,6 +53,7 @@ export const INTEGRATIONS: Integration[] = [
       'Build Elementor v4 atomic elements (flexbox, div-block, atomic widgets)',
       'Create popups, set triggers, and bind dynamic tags',
       'Add site-wide custom CSS and manage Elementor code snippets',
+      'Build custom Elementor widgets from a data spec (no code generation, no eval)',
       'Duplicate, reorder, and relabel elements safely',
       'Roll back any widget, structural, or global-style change, per edit or per session',
     ],
@@ -86,6 +87,7 @@ export const INTEGRATIONS: Integration[] = [
       'Insert, update, move, duplicate, and remove blocks precisely',
       'Drop in registered block patterns',
       'Inspect block type schemas before editing',
+      'Build custom Gutenberg blocks from a data spec (no code generation, no eval)',
       'Undo any block edit, per change or per session',
     ],
     prompts: [
