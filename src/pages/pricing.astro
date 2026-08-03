@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import Schema from '../components/Schema.astro';
+import { INSTALL_FREE_URL } from '../consts';
+
+const FS_PLUGIN_ID = 34955;
+const FS_PRO_PLAN_ID = 57477;
+
+/* Lifetime tiers flip live once the launch-window pricing exists on Freemius. */
+const lifetimeLive = false;
+
+const checkout = (licenses: string, cycle: string = 'annual') =>
+  `https://checkout.freemius.com/plugin/${FS_PLUGIN_ID}/plan/${FS_PRO_PLAN_ID}/?billing_cycle=${cycle}&licenses=${licenses}`;
+
+const annual = [
+  { sites: '1 site', price: '$26.99', licenses: '1', note: 'For one production site.' },
+  { sites: '10 sites', price: '$53.99', licenses: '10', note: 'For freelancers with a client roster.', featured: true },
+  { sites: '100 sites', price: '$71.99', licenses: '100', note: 'For agencies running fleets.' },
+  { sites: 'Unlimited', price: '$89.99', licenses: 'unlimited', note: 'Every site you will ever run.' },
+];
+
+const faqs = [
+  {
+    q: 'What stays free forever?',
+    a: 'The MCP server, the snapshot-before-every-write safety engine, one-click and session rollback (last 20 snapshots), Gutenberg building, and the integration read tools. The safety net is not the upsell.',
+  },
+  {
+    q: 'What does Pro add?',
+    a: 'Unlimited snapshot history, deep Elementor editing and building, the custom widget and block builders, WP MCP Cloud sync for your widget and block specs, and priority support.',
+  },
+  {
+    q: 'Who handles payment and invoices?',
+    a: 'Freemius, our merchant of record. Checkout, EU VAT, and invoices are handled by Freemius; licenses activate in the plugin automatically.',
+  },
+  {
+    q: 'Do licenses work on localhost and staging?',
+    a: 'Yes. Localhost and common staging domains do not consume a site activation.',
+  },
+];
+---
+
+<Base
+  title="WP MCP Pricing: free safety core, Pro from $26.99/yr"
+  description="The snapshot and rollback safety core is free and GPL. WP MCP Pro adds unlimited history, deep Elementor editing, widget and block builders, and cloud sync, from $26.99 per year."
+>
+  <Schema
+    webPage={{
+      name: 'WP MCP Pricing',
+      description: 'Free safety core, Pro plans from $26.99 per year via Freemius.',
+    }}
+    breadcrumbs={[
+      { name: 'Home', url: 'https://wpmcp-pro.com/' },
+      { name: 'Pricing', url: 'https://wpmcp-pro.com/pricing.html' },
+    ]}
+    faqs={faqs}
+  />
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="sec-label">Pricing</p>
+      <h1>The safety net is free. Pro is the power tools.</h1>
+      <p class="lede">
+        Every plan, including free, snapshots before every write and restores
+        in one click. Pro is for people who build with Elementor, want
+        unlimited history, and sync their custom widgets and blocks across
+        sites.
+      </p>
+      <p class="hero-fine mono">Secure checkout by Freemius · invoices and EU VAT handled · licenses activate automatically</p>
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Free</p>
+      <h2 class="rv">Fully functional. No trial clock, no crippled core.</h2>
+      <div class="card rv free-card">
+        <p class="ag-head mono">core / <b>free · GPL-2.0</b></p>
+        <ul>
+          <li>The full save, change, check, and restore engine</li>
+          <li>Content, media, menus, users, WooCommerce, SEO abilities</li>
+          <li>One-click restore from your dashboard or the AI</li>
+          <li>Last 20 changes kept in history</li>
+          <li>Self-hosted, no forced tracking</li>
+        </ul>
+        <a class="btn btn-primary" href={INSTALL_FREE_URL} rel="noopener">Get the free plugin</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="sec-label rv">Pro · annual</p>
+      <h2 class="rv">One license, every Pro capability. Priced by sites.</h2>
+      <p class="lede-dim rv">
+        Unlimited history and session restore, Elementor deep editing and
+        building, custom widget and block builders, WP MCP Cloud sync,
+        priority support.
+      </p>
+      <div class="tier-grid">
+        {annual.map((t) => (
+          <div class={`card rv tier ${t.featured ? 'featured' : ''}`}>
+            <p class="ag-head mono">{t.sites}</p>
+            <p class="price"><b>{t.price}</b><span class="cycle">/yr</span></p>
+            <p class="tier-note">{t.note}</p>
+            <a class={`btn ${t.featured ? 'btn-primary' : ''}`} href={checkout(t.licenses)} rel="noopener">
+              Buy Pro
+            </a>
+          </div>
+        ))}
+      </div>
+      {lifetimeLive && (
+        <div class="lifetime rv">
+          <p class="sec-label">Launch offer · lifetime</p>
+          <h3>Pay once, keep it forever. Launch window only.</h3>
+          <div class="tier-grid">
+            <div class="card tier">
+              <p class="ag-head mono">1 site · lifetime</p>
+              <p class="price"><b>$79</b><span class="cycle">once</span></p>
+              <a class="btn" href={checkout('1', 'lifetime')} rel="noopener">Buy lifetime</a>
+            </div>
+            <div class="card tier featured">
+              <p class="ag-head mono">Unlimited · lifetime</p>
+              <p class="price"><b>$179</b><span class="cycle">once</span></p>
+              <a class="btn btn-primary" href={checkout('unlimited', 'lifetime')} rel="noopener">Buy lifetime</a>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="paper">
+    <div class="wrap">
+      <p class="sec-label rv">Questions</p>
+      <h2 class="rv">The honest fine print.</h2>
+      <div class="faq-grid">
+        {faqs.map((f) => (
+          <div class="card rv">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .free-card { max-width: 34rem; }
+  .free-card ul { margin: 1rem 0 1.5rem; padding-left: 1.1rem; }
+  .free-card li { margin: 0.35rem 0; }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .tier { display: flex; flex-direction: column; gap: 0.6rem; }
+  .tier .btn { margin-top: auto; text-align: center; }
+  .tier.featured { border-color: var(--accent); }
+  .price { font-size: 1.9rem; line-height: 1.1; }
+  .price .cycle { font-size: 0.9rem; opacity: 0.7; margin-left: 0.25rem; }
+  .tier-note { min-height: 2.6em; opacity: 0.85; }
+  .lifetime { margin-top: 3rem; }
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .faq-grid h3 { margin-bottom: 0.5rem; }
+</style>
